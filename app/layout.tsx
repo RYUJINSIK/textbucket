@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "pretendard/dist/web/static/pretendard.css";
+// import "pretendard/dist/web/static/pretendard.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,7 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body>
+        {children}
+        <div id="global-modal"></div>
+      </body>
     </html>
   );
 }

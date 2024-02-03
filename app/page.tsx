@@ -1,52 +1,62 @@
+"use client";
+
+import PilsaCard, { IPilsaCardItem } from "@/components/PilsaCard";
 import WithHeaderLayout from "@/components/WithHeaderLayout";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+interface IPilsaList {
+  totalCount: number;
+  pilsaLists: IPilsaCardItem[];
+}
 
 export default function Home() {
+  const [todayList, setTodayList] = useState<IPilsaList | undefined>(undefined);
+  const [recommenList, setRecommenList] = useState<IPilsaList | undefined>(
+    undefined
+  );
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const fetchTodayPilsaLIst = async () => {
+    const res = await axios.get<IPilsaList>(
+      `http://223.130.135.113:8080/api/v1/pilsa/list?page=${page}&size=${pageSize}`
+    );
+    if (res.status === 200) {
+      setTodayList(res.data);
+      return res.data;
+    }
+  };
+  const fetchRecommendPilsaLIst = async () => {
+    const res = await axios.get<IPilsaList>(
+      `http://223.130.135.113:8080/api/v1/pilsa/basic/contents/list?page=${page}&size=${pageSize}`
+    );
+    if (res.status === 200) {
+      setRecommenList(res.data);
+      return res.data;
+    }
+  };
+
+  useEffect(() => {
+    fetchTodayPilsaLIst();
+    fetchRecommendPilsaLIst();
+  }, []);
+
   return (
     <WithHeaderLayout>
-      <div className="flex flex-col gap-y-8 mt-5">
+      <div className="flex flex-col gap-y-8 my-5">
         <section className="flex flex-col gap-y-4">
           <h3 className="text-lg font-bold">오늘의 글감</h3>
-          <div className="p-6 rounded-xl bg-[#FFF1F1]">
-            <div className="flex items-center gap-x-0.5 text-[#666666] text-sm font-medium">
-              <span>소설</span>
-              <span>∙</span>
-              <span>외국어</span>
-            </div>
-            <p className="text-[#353535] font-bold mt-3 mb-4">위대한 개츠비</p>
-            <p className="text-[#353535] font-light text-ellipsis h-[224px] overflow-hidden leading-7 mb-4">
-              Ich bitte die Kinder um Verzeihung, daß ich dieses Buch einem
-              Erwachsenen widme. Ich habe eine ernstliche Entschu ldigung
-              dsdafür: Dieser Erwachsene ist der beste asdFreund, den ich in der
-              Welt habe. Ichden aich in der Welt haden ich in der Welt haWel ist
-              der beste asd Freund, den ich in der Welt habe. Ichden as ich in
-              der Welt haden ich in der Welt haWel
-            </p>
-            <span className="text-sm text-[#666] font-light">
-              - 앙투안 드 생텍쥐페리
-            </span>
-          </div>
+          {todayList &&
+            todayList.pilsaLists.map((pilsaInfo: IPilsaCardItem) => (
+              <PilsaCard pilsaInfo={pilsaInfo} key={pilsaInfo.pilsaId} />
+            ))}
         </section>
         <section className="flex flex-col gap-y-4">
           <h3 className="text-lg font-bold">추천 글감</h3>
-          <div className="p-6 rounded-xl bg-[#FDFDD0]">
-            <div className="flex items-center gap-x-0.5 text-[#666666] text-sm font-medium">
-              <span>소설</span>
-              <span>∙</span>
-              <span>외국어</span>
-            </div>
-            <p className="text-[#353535] font-bold mt-3 mb-4">위대한 개츠비</p>
-            <p className="text-[#353535] font-light text-ellipsis h-[224px] overflow-hidden leading-7 mb-4">
-              Ich bitte die Kinder um Verzeihung, daß ich dieses Buch einem
-              Erwachsenen widme. Ich habe eine ernstliche Entschu ldigung
-              dsdafür: Dieser Erwachsene ist der beste asdFreund, den ich in der
-              Welt habe. Ichden aich in der Welt haden ich in der Welt haWel ist
-              der beste asd Freund, den ich in der Welt habe. Ichden as ich in
-              der Welt haden ich in der Welt haWel
-            </p>
-            <span className="text-sm text-[#666] font-light">
-              - 앙투안 드 생텍쥐페리
-            </span>
-          </div>
+          {recommenList &&
+            recommenList.pilsaLists.map((pilsaInfo: IPilsaCardItem) => (
+              <PilsaCard pilsaInfo={pilsaInfo} key={pilsaInfo.pilsaId} />
+            ))}
         </section>
       </div>
     </WithHeaderLayout>

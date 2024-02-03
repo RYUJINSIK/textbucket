@@ -29,7 +29,7 @@ const BottomSheet = ({
   getImage,
 }: BottomSheetProps) => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const imageCount = 25;
+  const imageCount = 22;
 
   const handleImageClick = (index: any) => {
     setSelectedImage(index);
@@ -41,7 +41,6 @@ const BottomSheet = ({
     onClose();
     getImage?.(selectedImage);
   };
-  const imageDataSend = () => {};
   const groupedImages = Array.from(
     { length: Math.ceil(imageCount / 5) },
     (_, groupIndex) =>
@@ -62,9 +61,9 @@ const BottomSheet = ({
             style={{
               backgroundImage:
                 selectedImage !== null
-                  ? `url('/images/bg_image${selectedImage + 1}.jpg')`
+                  ? `url('/images/bg_image${selectedImage + 1}.png')`
                   : "none",
-              backgroundSize: "cover", // 배경 이미지 크기 조절 (선택적)
+              backgroundSize: "cover",
             }}
           >
             <div className="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-3">
@@ -86,7 +85,7 @@ const BottomSheet = ({
           </div>
         </div>
 
-        <div className="flex justify-start items-start flex-grow-0 flex-shrink-0 w-[360px] h-[170px] overflow-auto gap-2 p-4 bg-white border-t-0 border-r-0 border-b border-l-0 border-[#e3e3e3]">
+        <div className="flex justify-center items-start flex-grow-0 flex-shrink-0 w-full h-[170px] overflow-auto gap-2 p-4 bg-white border-t-0 border-r-0 border-b border-l-0 border-[#e3e3e3]">
           <div className="justify-start items-start flex-grow-0 flex-shrink-0 w-[328px] relative gap-2">
             {groupedImages.map((group, groupIndex) => (
               <div key={groupIndex} className="flex gap-2 pb-2">
@@ -97,17 +96,19 @@ const BottomSheet = ({
                     onClick={() => handleImageClick(index)}
                   >
                     {/* 이미지를 가져오는 로직을 추가하세요 */}
-                    <Image
-                      src={`/images/bg_image${index + 1}.jpg`} // 예제로 사용한 임시 이미지 URL
-                      alt={`Image ${index + 1}`}
-                      width={60}
-                      height={60}
-                      className={`w-[60px] h-[60px] rounded-lg opacity-60  ${
-                        selectedImage === index
-                          ? "border-2 rounded-lg border-black	"
-                          : ""
-                      }`}
-                    />
+                    {index < imageCount && (
+                      <Image
+                        src={`/images/bg_image${index + 1}.png`} // 예제로 사용한 임시 이미지 URL
+                        alt={`Image ${index + 1}`}
+                        width={60}
+                        height={60}
+                        className={`w-[60px] h-[60px] rounded-lg ${
+                          selectedImage === index
+                            ? "border-2 rounded-lg border-black	"
+                            : ""
+                        }`}
+                      />
+                    )}
                   </div>
                 ))}
               </div>

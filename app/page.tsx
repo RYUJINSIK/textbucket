@@ -55,7 +55,11 @@ export default function Home() {
           <h3 className="text-lg font-bold">추천 글감</h3>
           {recommenList &&
             recommenList.pilsaLists.map((pilsaInfo: IPilsaCardItem) => (
-              <PilsaCard pilsaInfo={pilsaInfo} key={pilsaInfo.pilsaId} />
+              <PilsaCard
+                pilsaInfo={pilsaInfo}
+                key={pilsaInfo.pilsaId}
+                hasDetail={false}
+              />
             ))}
         </section>
       </div>

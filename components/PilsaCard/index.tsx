@@ -1,14 +1,18 @@
+"use client";
+
 import { IProfile } from "@/shared/contexts/AuthContext";
+import { useRouter } from "next/navigation";
 
 interface IPilsaCardProps {
   pilsaInfo: IPilsaCardItem;
+  hasDetail?: boolean;
 }
 export interface IPilsaCardItem {
   author: string;
-  backgroundColor: String;
+  backgroundColor: string;
   backgroundImageUrl: string;
   categoryList: ICategoryItem[];
-  memberInfoResponse: IProfile[];
+  memberInfoResponse: IProfile;
   pilsaId: string;
   pilsaImages: IImageItem[];
   privateType: string;
@@ -29,7 +33,7 @@ export interface IImageItem {
   imageSeq: number;
 }
 
-const PilsaCard = ({ pilsaInfo }: IPilsaCardProps) => {
+const PilsaCard = ({ pilsaInfo, hasDetail = true }: IPilsaCardProps) => {
   const {
     author,
     backgroundColor,
@@ -37,17 +41,28 @@ const PilsaCard = ({ pilsaInfo }: IPilsaCardProps) => {
     categoryList,
     textContents,
     title,
+    pilsaId,
   } = pilsaInfo;
+  const router = useRouter();
+
+  const goToDetailPage = () => {
+    hasDetail && router.push(`/pilsa/${pilsaId}`);
+  };
   return (
     <div
-      className={`${
-        backgroundColor ? "bg-[#FFF1F1]" : -""
-      } p-6 rounded-xl relative`}
+      className={`p-6 rounded-xl relative cursor-pointer`}
+      onClick={goToDetailPage}
     >
       {backgroundImageUrl && (
         <div className="absolute top-0 left-0 w-full h-full z-0 bg-white/40">
           <img src={backgroundImageUrl} alt="pilsaImg" />
         </div>
+      )}
+      {backgroundColor && (
+        <div
+          className="absolute top-0 left-0 w-full h-full z-0"
+          style={{ backgroundColor: backgroundColor }}
+        ></div>
       )}
       <div className="flex items-center gap-x-0.5 text-[#666666] text-sm font-medium">
         {categoryList &&

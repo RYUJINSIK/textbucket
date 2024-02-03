@@ -52,13 +52,13 @@ const BottomSheet = ({
   return (
     <>
       <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-[60]" />
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white z-[70] w-[360px] rounded-xl">
-        <div className="flex flex-col items-center justify-center py-3 gap-y-2">
-          <h2 className="font-semibold">카드꾸미기</h2>
+      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 bg-white z-[70] w-full max-w-[390px] rounded-t-xl">
+        <div className="flex flex-col items-center justify-center py-4">
+          <h2 className="font-bold">카드꾸미기</h2>
         </div>
-        <div className="flex justify-start items-start flex-grow-0 flex-shrink-0 w-[360px] gap-2 px-4 bg-white pb-2">
+        <div className="flex justify-start items-start flex-grow-0 flex-shrink-0 gap-2 px-4 bg-white pb-2">
           <div
-            className={`flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 w-[328px] relative gap-4 p-6 rounded-xl `}
+            className={`flex flex-col relative gap-4 p-6 rounded-xl border`}
             style={{
               backgroundImage:
                 selectedImage !== null
@@ -68,26 +68,21 @@ const BottomSheet = ({
             }}
           >
             <div className="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-3">
-              <div className="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-0.5">
-                {category.map((categoryItem: any, index: any) => (
-                  <p
-                    key={index}
-                    className="flex-grow-0 flex-shrink-0 text-[13px] font-medium text-left text-[#666]"
-                  >
-                    {categoryItem}
-                  </p>
-                ))}
+              <div className="flex items-center gap-x-0.5 text-[#666666] text-sm font-medium">
+                <p>소설</p>
               </div>
-              <p className="flex-grow-0 flex-shrink-0 text-base font-bold text-left text-[#353535]">
-                {title}
+              <p className="text-[#353535] font-bold font-Bokk-MeongJo">
+                나는 나로살기로 헀다
               </p>
             </div>
-            <pre>{content}</pre>
-            <div className="flex justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-2.5">
-              <p className="self-stretch flex-grow-0 flex-shrink-0 w-[280px] text-[11px] font-light text-left text-[#666]">
-                - {author} - {publisher}
-              </p>
-            </div>
+            <p className="text-[#353535] font-light text-ellipsis overflow-hidden leading-7 mb-4 font-Bokk-MeongJo">
+              Ich bitte die Kinder um Verzeihung, daß ich dieses Buch einem
+              Erwachsenen widme. Ich habe eine ernstliche Entschu ldigung
+              dsdafür: Dieser Erwa
+            </p>
+            <span className="text-sm text-[#666] font-light font-Bokk-MeongJo">
+              - 앙투안 드 생텍쥐페리
+            </span>
           </div>
         </div>
 
@@ -98,7 +93,7 @@ const BottomSheet = ({
                 {group.map((index) => (
                   <div
                     key={index}
-                    className={`relative cursor-pointer `}
+                    className={`relative cursor-pointer`}
                     onClick={() => handleImageClick(index)}
                   >
                     {/* 이미지를 가져오는 로직을 추가하세요 */}
@@ -119,27 +114,25 @@ const BottomSheet = ({
             ))}
           </div>
         </div>
-
-        <div
-          className={`${
-            confirmButton ? "grid-cols-2" : "grid-cols-1"
-          } grid py-4`}
-        >
+        <div className="flex px-4 py-3 gap-x-2 items-center">
           {closeButton && (
             <button
               onClick={() => {
                 onClose();
                 setSelectedImage(null);
               }}
-              className="font-semibold text-sm"
+              className="font-bold text-sm border inline-flex items-center justify-center py-4 border-[#afafaf] w-[128px] rounded-lg"
             >
               {closeButton}
             </button>
           )}
 
           {confirmButton && (
-            <div className="relative flex items-center justify-center">
-              <button className="font-semibold text-sm" onClick={sendImage}>
+            <div className="relative flex items-center justify-center w-full py-4 rounded-lg bg-[#6D6D6D]">
+              <button
+                className="font-bold text-sm text-white"
+                onClick={sendImage}
+              >
                 {confirmButton}
               </button>
             </div>

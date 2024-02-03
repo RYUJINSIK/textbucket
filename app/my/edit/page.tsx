@@ -76,6 +76,7 @@ const ProfileEditPage = () => {
             <textarea
               id="description"
               {...register("description")}
+              maxLength={100}
               className="border-[#e3e3e3] p-3 rounded-lg border w-full resize-none text-xs text-[#353535] h-[100px]"
             />
             <button

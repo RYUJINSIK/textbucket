@@ -26,6 +26,7 @@ const GetProfile = () => {
         socialType: "KAKAO",
         authCode: code,
         isLocal: true,
+        redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
       },
       {
         headers: {
@@ -68,11 +69,9 @@ const GetProfile = () => {
   }, [authCode]);
 
   return (
-    <div className="spinner">
+    <div className="flex items-center justify-center w-screen h-screen">
       <h2>
-        잠시만 기다려 주세요!
-        <br />
-        로그인 중입니다.
+        <img src="/images/loading.gif" alt="loading" />
       </h2>
     </div>
   );

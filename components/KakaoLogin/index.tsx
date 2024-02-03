@@ -9,12 +9,19 @@ const KakaoLogin = () => {
   return (
     <div className="relative w-full max-w-[390px] mx-auto">
       <header className="sticky top-0 px-4 border-b border-[#efefef] py-3">
-        LOGO
+        <Link href={"/"}>
+          <Image
+            src="/images/logo.png"
+            alt="텍스트버킷"
+            width={103}
+            height={24}
+          />
+        </Link>
       </header>
       <div className="flex flex-col items-center justify-center gap-y-9 w-full max-w-[296px] mx-auto">
         <div className="mt-[148px] w-full h-full items-center justify-center flex flex-col">
           <p className="mb-4 text-[#666] font-semibold text-center">
-            꾸준히 가능한 필사, ㅇㅇㅇ
+            꾸준히가 가능한 필사, 텍스트버킷
           </p>
           <p className="text-lg font-semibold text-center">
             필사에 관심 있는 누구나

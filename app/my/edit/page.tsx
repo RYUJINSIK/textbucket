@@ -48,7 +48,7 @@ const ProfileEditPage = () => {
   };
   const onSubmit = async (data: IProfileFormProps) => {
     const res = await axios.put(
-      "http://223.130.135.113:8080/api/v1/member",
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/member`,
       data,
       {
         headers: {

@@ -21,7 +21,7 @@ const GetProfile = () => {
 
   const changeCodeToToken = useCallback(async (code: string) => {
     const res = await axios.post(
-      "http://223.130.135.113:8080/api/v1/login",
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/login`,
       {
         socialType: "KAKAO",
         authCode: code,
@@ -45,11 +45,14 @@ const GetProfile = () => {
 
   const getProfile = useCallback(async () => {
     const accessToken = localStorage.getItem("accessToken");
-    const res = await axios.get("http://223.130.135.113:8080/api/v1/member", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/member`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
     if (res.status === 200) {
       setProfile(res.data);
       setIsSigned(true);

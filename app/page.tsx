@@ -5,7 +5,7 @@ import WithHeaderLayout from "@/components/WithHeaderLayout";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-interface IPilsaList {
+export interface IPilsaList {
   totalCount: number;
   pilsaLists: IPilsaCardItem[];
 }
@@ -19,7 +19,7 @@ export default function Home() {
   const [pageSize, setPageSize] = useState(10);
   const fetchTodayPilsaLIst = async () => {
     const res = await axios.get<IPilsaList>(
-      `http://223.130.135.113:8080/api/v1/pilsa/list?page=${page}&size=${pageSize}`
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa/list?page=${page}&size=${pageSize}`
     );
     if (res.status === 200) {
       setTodayList(res.data);
@@ -28,7 +28,7 @@ export default function Home() {
   };
   const fetchRecommendPilsaLIst = async () => {
     const res = await axios.get<IPilsaList>(
-      `http://223.130.135.113:8080/api/v1/pilsa/basic/contents/list?page=${page}&size=${pageSize}`
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa/basic/contents/list?page=${page}&size=${pageSize}`
     );
     if (res.status === 200) {
       setRecommenList(res.data);

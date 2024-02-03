@@ -7,9 +7,9 @@ const WithHeaderLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <main className="w-full max-w-[390px] h-full mx-auto relative">
+    <main className="w-full max-w-[390px] h-full min-h-screen mx-auto relative">
       <Header />
-      <div className="w-full px-4">{children}</div>
+      <div className="w-full px-4 h-full">{children}</div>
     </main>
   );
 };

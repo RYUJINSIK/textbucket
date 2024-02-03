@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-// import "pretendard/dist/web/static/pretendard.css";
+import AuthProvider from "@/shared/contexts/AuthContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        {children}
+        <AuthProvider>{children}</AuthProvider>
         <div id="global-modal"></div>
       </body>
     </html>

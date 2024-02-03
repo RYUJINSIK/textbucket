@@ -3,11 +3,19 @@
 import { useAuth } from "@/shared/contexts/AuthContext";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, Suspense } from "react";
 
 const AuthPage = () => {
+  return (
+    <Suspense>
+      <GetProfile />
+    </Suspense>
+  );
+};
+const GetProfile = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const authCode = searchParams.get("code");
 
   const { setProfile, setIsSigned } = useAuth();
 
@@ -53,9 +61,8 @@ const AuthPage = () => {
   }, []);
 
   useEffect(() => {
-    const authCode = searchParams.get("code");
     if (authCode) changeCodeToToken(authCode);
-  }, [searchParams]);
+  }, [authCode]);
 
   return (
     <div className="spinner">
@@ -67,4 +74,5 @@ const AuthPage = () => {
     </div>
   );
 };
+
 export default AuthPage;

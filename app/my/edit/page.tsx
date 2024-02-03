@@ -17,7 +17,8 @@ export interface IProfileFormProps {
 const ProfileEditPage = () => {
   const router = useRouter();
   const { profile, setProfile, setIsSigned } = useAuth();
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken =
+    typeof window !== "undefined" && localStorage.getItem("accessToken");
   const [isOpen, setIsOpen] = useState(false);
   const {
     register,
@@ -38,8 +39,10 @@ const ProfileEditPage = () => {
 
   const Logout = () => {
     setIsOpen(false);
-    localStorage.removeItem("profile");
-    localStorage.removeItem("accessToken");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("profile");
+      localStorage.removeItem("accessToken");
+    }
     setIsSigned(false);
     router.push("/");
   };

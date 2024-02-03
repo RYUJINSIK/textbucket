@@ -49,10 +49,7 @@ const MyPage = () => {
               <h3 className="text-lg font-bold">내 필사 아카이브</h3>
               <sup className="text-xs text-[#777]">13</sup>
             </div>
-            <div className="mt-3 flex flex-col gap-y-4">
-              <PilsaCard />
-              <PilsaCard />
-            </div>
+            <div className="mt-3 flex flex-col gap-y-4"></div>
           </section>
         </main>
       </WithHeaderLayout>

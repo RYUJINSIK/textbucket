@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
-const PilsaDetailPage = () => {
+const MyPilsaDetailPage = () => {
   const params = useParams();
   const pilsaId = params.id;
   const { profile } = useAuth();
@@ -20,12 +20,10 @@ const PilsaDetailPage = () => {
   );
   const [toggle, setToggle] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const nowDate = new Date();
-  const isMine = profile?.id === pilsaInfo?.memberInfoResponse.id;
 
   const fetchPilsaItem = async (pilsaId: string) => {
     const res = await axios.get<IPilsaCardItem>(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa/${pilsaId}?getMyPilsa=false`
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa/${pilsaId}?getMyPilsa=true`
     );
     if (res.status === 200) {
       setPilsaInfo(res.data);
@@ -75,7 +73,7 @@ const PilsaDetailPage = () => {
       {pilsaInfo && (
         <>
           <main
-            className="pt-6 flex flex-col gap-y-5 pb-12 h-full relative px-4"
+            className="pt-6 flex flex-col gap-y-5 pb-12 px-4 h-full relative"
             style={{
               minHeight: "calc(100vh - 101px)",
             }}
@@ -124,44 +122,43 @@ const PilsaDetailPage = () => {
                 <p className="text-lg text-[#353535] font-bold font-Bokk-MeongJo">
                   {pilsaInfo.title}
                 </p>
-                {isMine && (
-                  <div
-                    className="relative cursor-pointer"
-                    onClick={onClickToggle}
-                  >
-                    <Image
-                      src="/icons/more_vertical_icon.svg"
-                      alt="more"
-                      width={24}
-                      height={24}
-                    />
-                    {toggle && (
-                      <div className="absolute -bottom-[110px] right-0 bg-white rounded-lg w-[114px] shadow-md">
-                        <Link
-                          href={`/pilsa/${pilsaId}/update`}
-                          className="flex items-center gap-x-2 py-4 px-5"
-                        >
-                          <img src="/icons/pencil_icon.svg" />
-                          <span className="text-sm">수정하기</span>
-                        </Link>
-                        <div
-                          onClick={() => {
-                            setToggle(false);
-                            setIsOpen(true);
-                          }}
-                          className="flex items-center gap-x-2 py-4 px-5 border-t border-[#dedede]"
-                        >
-                          <img
-                            src="/icons/trashcan_icon.png"
-                            width={16}
-                            height={16}
-                          />
-                          <span className="text-sm">삭제하기</span>
-                        </div>
+
+                <div
+                  className="relative cursor-pointer"
+                  onClick={onClickToggle}
+                >
+                  <Image
+                    src="/icons/more_vertical_icon.svg"
+                    alt="more"
+                    width={24}
+                    height={24}
+                  />
+                  {toggle && (
+                    <div className="absolute -bottom-[110px] right-0 bg-white rounded-lg w-[114px] shadow-md">
+                      <Link
+                        href={`/pilsa/${pilsaId}/update`}
+                        className="flex items-center gap-x-2 py-4 px-5"
+                      >
+                        <img src="/icons/pencil_icon.svg" />
+                        <span className="text-sm">수정하기</span>
+                      </Link>
+                      <div
+                        onClick={() => {
+                          setToggle(false);
+                          setIsOpen(true);
+                        }}
+                        className="flex items-center gap-x-2 py-4 px-5 border-t border-[#dedede]"
+                      >
+                        <img
+                          src="/icons/trashcan_icon.png"
+                          width={16}
+                          height={16}
+                        />
+                        <span className="text-sm">삭제하기</span>
                       </div>
-                    )}
-                  </div>
-                )}
+                    </div>
+                  )}
+                </div>
               </div>
             </section>
             <section>
@@ -227,4 +224,4 @@ const PilsaDetailPage = () => {
     </WithHeaderLayout>
   );
 };
-export default PilsaDetailPage;
+export default MyPilsaDetailPage;

@@ -3,7 +3,6 @@
 import PilsaCard from "@/components/PilsaCard";
 import WithHeaderLayout from "@/components/WithHeaderLayout";
 import { useAuth } from "@/shared/contexts/AuthContext";
-import ProtectRoute from "@/shared/hoc/ProtectRoute";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -19,21 +18,34 @@ const MyPage = () => {
   const [myPilsaList, setMyPilsaList] = useState<IPilsaList | undefined>(
     undefined
   );
+  const [mounted, setMounted] = useState<boolean>(false);
   const accessToken =
     typeof window !== "undefined" && localStorage.getItem("accessToken");
 
+  const Logout = () => {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("profile");
+      localStorage.removeItem("accessToken");
+    }
+    router.push("/");
+  };
+
   const fetchMyPilsaList = async () => {
-    const res = await axios.get<IPilsaList>(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa?page=${page}&size=${pageSize}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+    try {
+      const res = await axios.get<IPilsaList>(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa?page=${page}&size=${pageSize}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (res.status === 200) {
+        setMyPilsaList(res.data);
+        return res.data;
       }
-    );
-    if (res.status === 200) {
-      setMyPilsaList(res.data);
-      return res.data;
+    } catch (error) {
+      Logout();
     }
   };
   const goToEditPage = () => {
@@ -44,10 +56,12 @@ const MyPage = () => {
     fetchMyPilsaList();
   }, []);
 
-  console.log(myPilsaList);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
-    <ProtectRoute>
+    mounted && (
       <WithHeaderLayout>
         <main className="mt-4 px-4 flex flex-col gap-y-8">
           <section className="p-4 flex flex-col gap-y-3 items-center justify-center border rounded-xl border-[#EFEFEF]">
@@ -87,7 +101,8 @@ const MyPage = () => {
               )}
             </div>
             <div className="mt-3 flex flex-col gap-y-4">
-              {myPilsaList ? (
+              {myPilsaList?.totalCount !== 0 ? (
+                myPilsaList &&
                 myPilsaList.pilsaLists.map((pilsaInfo) => (
                   <PilsaCard pilsaInfo={pilsaInfo} key={pilsaInfo.pilsaId} />
                 ))
@@ -102,7 +117,7 @@ const MyPage = () => {
                   </p>
                   <Link
                     href={"/create"}
-                    className="w-full py-4 rounded-lg text-white text-center bg-[#6D6D6D] text-lg font-bold"
+                    className="w-full py-4 rounded-lg text-white text-center bg-[#00C37D] text-lg font-bold"
                   >
                     필사하기
                   </Link>
@@ -112,7 +127,7 @@ const MyPage = () => {
           </section>
         </main>
       </WithHeaderLayout>
-    </ProtectRoute>
+    )
   );
 };
 

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     "텍스트버킷에서 필사를 통해 지속가능한 마인드와 목표를 만들어 보세요",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/icons/favicon_16.svg",
   },
 };
 

@@ -47,7 +47,10 @@ const Modal = ({
             </div>
           )}
           {closeButton && (
-            <button onClick={onClose} className="font-semibold text-sm">
+            <button
+              onClick={onClose}
+              className="font-semibold text-sm text-[#00C37D]"
+            >
               {closeButton}
             </button>
           )}

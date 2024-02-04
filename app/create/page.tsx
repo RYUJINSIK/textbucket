@@ -7,6 +7,15 @@ import { useRouter } from "next/navigation";
 import BottomSheet from "@/components/BottomSheet";
 import Modal from "@/components/Modal";
 
+interface ICategorieyList {
+  categories: ICategoryItem[];
+}
+interface ICategoryItem {
+  categoryCd: number;
+  categoryName: string;
+  description: string;
+}
+
 const CreatePage = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -25,7 +34,7 @@ const CreatePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showWarningModal, setShowWarningModal] = useState(false);
   const [imageNumber, setImageNumber] = useState(0);
-  const [categoryList, setCategoryList] = useState([]);
+  const [categoryList, setCategoryList] = useState<any>([]);
 
   useEffect(() => {
     axios
@@ -144,7 +153,7 @@ const CreatePage = () => {
   return (
     <>
       <WithHeaderLayout>
-        <form action="" className="mt-4">
+        <form action="" className="mt-4 px-4">
           <div className="relative rounded-xl py-5 px-3 bg-[#F8F8F8]">
             <input
               type="text"
@@ -272,27 +281,29 @@ const CreatePage = () => {
               <span className="text-xs text-[#777]">(최대3개)</span>
             </div>
             <ul className="flex flex-wrap items-center justify-center gap-2.5 px-2">
-              {Object.entries(categoryList).map(([key, category]) => (
-                <li
-                  className={`px-3 py-1.5 border border-[#E3E3E3] rounded-[100px] cursor-pointer ${
-                    selectedCategories.includes(category.categoryCd)
-                      ? "bg-gray-500"
-                      : ""
-                  }`}
-                  key={key}
-                  onClick={() => handleCategoryClick(category.categoryCd)}
-                >
-                  <span
-                    className={`text-sm text-[#999] font-light ${
-                      selectedCategories.includes(category.categoryCd)
-                        ? "text-white"
+              {Object.entries<ICategoryItem>(categoryList).map(
+                ([key, category]) => (
+                  <li
+                    className={`px-3 py-1.5 border border-[#E3E3E3] rounded-[100px] cursor-pointer ${
+                      selectedCategories.includes(category?.categoryCd)
+                        ? "bg-gray-500"
                         : ""
                     }`}
+                    key={key}
+                    onClick={() => handleCategoryClick(category.categoryCd)}
                   >
-                    {category.categoryName}
-                  </span>
-                </li>
-              ))}
+                    <span
+                      className={`text-sm text-[#999] font-light ${
+                        selectedCategories.includes(category.categoryCd)
+                          ? "text-white"
+                          : ""
+                      }`}
+                    >
+                      {category.categoryName}
+                    </span>
+                  </li>
+                )
+              )}
             </ul>
           </div>
           <button

@@ -2,6 +2,7 @@
 
 import PilsaCard, { IPilsaCardItem } from "@/components/PilsaCard";
 import WithHeaderLayout from "@/components/WithHeaderLayout";
+import { useAuth } from "@/shared/contexts/AuthContext";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -15,6 +16,7 @@ export default function Home() {
   const [recommenList, setRecommenList] = useState<IPilsaList | undefined>(
     undefined
   );
+  const [mounted, setMounted] = useState<boolean>(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const fetchTodayPilsaLIst = async () => {
@@ -41,28 +43,31 @@ export default function Home() {
     fetchRecommendPilsaLIst();
   }, []);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <WithHeaderLayout>
-      <div className="flex flex-col gap-y-8 my-5">
-        <section className="flex flex-col gap-y-4">
-          <h3 className="text-lg font-bold">오늘의 글감</h3>
-          {todayList &&
-            todayList.pilsaLists.map((pilsaInfo: IPilsaCardItem) => (
-              <PilsaCard pilsaInfo={pilsaInfo} key={pilsaInfo.pilsaId} />
-            ))}
-        </section>
-        <section className="flex flex-col gap-y-4">
-          <h3 className="text-lg font-bold">추천 글감</h3>
-          {recommenList &&
-            recommenList.pilsaLists.map((pilsaInfo: IPilsaCardItem) => (
-              <PilsaCard
-                pilsaInfo={pilsaInfo}
-                key={pilsaInfo.pilsaId}
-                hasDetail={false}
-              />
-            ))}
-        </section>
-      </div>
-    </WithHeaderLayout>
+    mounted && (
+      <WithHeaderLayout>
+        <div className="flex flex-col gap-y-8 my-5 px-4">
+          <section className="flex flex-col gap-y-4">
+            <h3 className="text-lg font-bold">오늘의 글감</h3>
+            {todayList && <PilsaCard pilsaInfo={todayList.pilsaLists[0]} />}
+          </section>
+          <section className="flex flex-col gap-y-4">
+            <h3 className="text-lg font-bold">추천 글감</h3>
+            {recommenList &&
+              recommenList.pilsaLists.map((pilsaInfo: IPilsaCardItem) => (
+                <PilsaCard
+                  pilsaInfo={pilsaInfo}
+                  key={pilsaInfo.pilsaId}
+                  hasDetail={false}
+                />
+              ))}
+          </section>
+        </div>
+      </WithHeaderLayout>
+    )
   );
 }

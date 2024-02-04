@@ -57,7 +57,7 @@ const GetProfile = () => {
     if (res.status === 200) {
       setProfile(res.data);
       setIsSigned(true);
-      localStorage.setItem("proifile", JSON.stringify(res.data));
+      localStorage.setItem("profile", JSON.stringify(res.data));
       router.push("/");
     } else {
       router.push("/404");

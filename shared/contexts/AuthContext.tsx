@@ -7,6 +7,7 @@ import {
   Dispatch,
   SetStateAction,
   useEffect,
+  useMemo,
 } from "react";
 
 export interface IAuthContextState {
@@ -32,8 +33,17 @@ const AuthContext = createContext<IAuthContextState>({
 });
 
 const AuthProvider = ({ children }: any) => {
-  const [profile, setProfile] = useState<IProfile | null>(null);
-  const [isSigned, setIsSigned] = useState(false);
+  // 로컬 스토리지 값 사용
+  const localStorageProfile =
+    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
+  const localStorageToken =
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
+  // 로컬 스토리지 값을 (새로고침 시)초깃값으로 사용
+  const [profile, setProfile] = useState<IProfile | null>(
+    JSON.parse(localStorageProfile as string)
+  );
+  const [isSigned, setIsSigned] = useState(localStorageToken ? true : false);
 
   useEffect(() => {
     const rawProfile = localStorage.getItem("profile");
@@ -44,7 +54,7 @@ const AuthProvider = ({ children }: any) => {
       setProfile(profile);
       setIsSigned(true);
     }
-  }, [profile, isSigned]);
+  }, []);
 
   return (
     <AuthContext.Provider

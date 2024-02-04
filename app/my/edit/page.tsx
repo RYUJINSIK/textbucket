@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Modal from "@/components/Modal";
-import ProtectRoute from "@/shared/hoc/ProtectRoute";
 
 export interface IProfileFormProps {
   description: string;
@@ -62,56 +61,54 @@ const ProfileEditPage = () => {
     }
   };
   return (
-    <ProtectRoute>
-      <WithHeaderLayout>
-        <div
-          className="flex flex-col h-full justify-between"
-          style={{ minHeight: "calc(100vh - 72px)" }}
-        >
-          <form className="mt-4 px-4" onSubmit={handleSubmit(onSubmit)}>
-            <h3 className="text-lg font-bold">프로필 편집</h3>
-            <p className="mt-5 mb-2 font-medium text-[#131313] text-sm">
-              소개 한 마디
-            </p>
-            <textarea
-              id="description"
-              {...register("description")}
-              maxLength={100}
-              className="border-[#e3e3e3] p-3 rounded-lg border w-full resize-none text-xs text-[#353535] h-[100px]"
+    <WithHeaderLayout>
+      <div
+        className="flex flex-col h-full justify-between px-4"
+        style={{ minHeight: "calc(100vh - 72px)" }}
+      >
+        <form className="mt-4 px-4" onSubmit={handleSubmit(onSubmit)}>
+          <h3 className="text-lg font-bold">프로필 편집</h3>
+          <p className="mt-5 mb-2 font-medium text-[#131313] text-sm">
+            소개 한 마디
+          </p>
+          <textarea
+            id="description"
+            {...register("description")}
+            maxLength={100}
+            className="border-[#e3e3e3] p-3 rounded-lg border w-full resize-none text-xs text-[#353535] h-[100px]"
+          />
+          <button
+            type="submit"
+            className="mt-5 w-full py-4 rounded-lg text-white text-center bg-[#00C37D] text-sm font-bold"
+          >
+            적용하기
+          </button>
+        </form>
+        <div className="flex items-end justify-end">
+          <div
+            className="flex items-center gap-x-1 cursor-pointer"
+            onClick={onClickLogout}
+          >
+            <Image
+              src="/icons/logout_icon.svg"
+              width={16}
+              height={16}
+              alt="logout"
             />
-            <button
-              type="submit"
-              className="mt-5 w-full py-4 rounded-lg text-white text-center bg-[#6D6D6D] text-sm font-bold"
-            >
-              적용하기
-            </button>
-          </form>
-          <div className="flex items-end justify-end">
-            <div
-              className="flex items-center gap-x-1 cursor-pointer"
-              onClick={onClickLogout}
-            >
-              <Image
-                src="/icons/logout_icon.svg"
-                width={16}
-                height={16}
-                alt="logout"
-              />
-              <span className="text-[#999] font-bold">로그아웃</span>
-            </div>
+            <span className="text-[#999] font-bold">로그아웃</span>
           </div>
         </div>
-        <Modal
-          open={isOpen}
-          onClose={() => setIsOpen(false)}
-          confirmEvent={Logout}
-          title="정말 로그아웃할까요?"
-          content="가지 마세요..."
-          confirmButton="로그아웃하기"
-          closeButton="닫기"
-        />
-      </WithHeaderLayout>
-    </ProtectRoute>
+      </div>
+      <Modal
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        confirmEvent={Logout}
+        title="정말 로그아웃할까요?"
+        content="가지 마세요..."
+        confirmButton="로그아웃하기"
+        closeButton="닫기"
+      />
+    </WithHeaderLayout>
   );
 };
 export default ProfileEditPage;

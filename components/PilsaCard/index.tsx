@@ -1,7 +1,7 @@
 "use client";
 
 import { IProfile } from "@/shared/contexts/AuthContext";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface IPilsaCardProps {
   pilsaInfo: IPilsaCardItem;
@@ -21,6 +21,16 @@ export interface IPilsaCardItem {
   textContents: string;
   title: string;
   updateDate: string;
+  isNextPilsa: boolean;
+  isPreviousPilsa: boolean;
+  nextPilsa: {
+    pilsaId: number;
+    title: string;
+  };
+  previousPilsa: {
+    pilsaId: number;
+    title: string;
+  };
 }
 export interface ICategoryItem {
   categoryCd: number;
@@ -44,9 +54,13 @@ const PilsaCard = ({ pilsaInfo, hasDetail = true }: IPilsaCardProps) => {
     pilsaId,
   } = pilsaInfo;
   const router = useRouter();
+  const pathName = usePathname();
 
   const goToDetailPage = () => {
-    hasDetail && router.push(`/pilsa/${pilsaId}`);
+    const isMypage = pathName.includes("my");
+    hasDetail && isMypage
+      ? router.push(`/my/${pilsaId}`)
+      : router.push(`/pilsa/${pilsaId}`);
   };
   return (
     <div

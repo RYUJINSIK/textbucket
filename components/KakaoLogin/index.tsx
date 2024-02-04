@@ -7,7 +7,7 @@ const KakaoLogin = () => {
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   return (
-    <div className="relative w-full max-w-[390px] mx-auto">
+    <div className="relative w-full max-w-[390px] mx-auto bg-white min-h-screen shadow-xl">
       <header className="sticky top-0 px-4 border-b border-[#efefef] py-3">
         <Link href={"/"} className="flex items-center justify-center">
           <Image

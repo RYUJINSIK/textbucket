@@ -62,3 +62,7 @@
     "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
     sans-serif;
 }
+
+body {
+  background-color: #dffff3;
+}

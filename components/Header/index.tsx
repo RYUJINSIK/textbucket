@@ -29,6 +29,9 @@ const Header = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
+  const goToMain = () => {
+    void router.push("/");
+  };
 
   return (
     mounted && (
@@ -72,13 +75,13 @@ const Header = () => {
             <div className="flex items-center gap-x-2">
               <div
                 onClick={goToLoginPage}
-                className="py-2 px-4 rounded-lg bg-[#00C37D] text-white text-sm font-semibold"
+                className="py-2 px-4 rounded-lg bg-[#00C37D] text-white text-sm font-semibold cursor-pointer"
               >
                 필사하기
               </div>
               <div
                 onClick={goToLoginPage}
-                className="py-2 px-4 rounded-lg border border-[#00C37D] text-[#00C37D] text-sm font-semibold"
+                className="py-2 px-4 rounded-lg border border-[#00C37D] text-[#00C37D] text-sm font-semibold cursor-pointer"
               >
                 로그인
               </div>
@@ -89,6 +92,7 @@ const Header = () => {
           <Modal
             open={confirmModal}
             onClose={() => setConfirmModalModal(!confirmModal)}
+            confirmEvent={goToMain}
             title="작성을 취소하고 나가시겠어요?"
             content="작성한 글은 저장되지 않아요."
             closeButton="머무르기"

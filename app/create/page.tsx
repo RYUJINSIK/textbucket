@@ -47,7 +47,6 @@ const CreatePage = () => {
       .then((res) => {
         const categories = res.data.categories; // "categories" 키에서 배열을 추출
         setCategoryList(categories);
-        console.log("data ? : ", categories);
       })
       .catch((error) => {
         console.log("!", error);
@@ -65,7 +64,6 @@ const CreatePage = () => {
         setSelectedCategories([...selectedCategories, category]);
       }
     }
-    console.log(selectedCategories);
   };
 
   const handleInputChange = (event: {
@@ -128,7 +126,6 @@ const CreatePage = () => {
           },
         }
       );
-      console.log(response.data);
       router.push("/");
     } catch (error) {
       console.error(error);
@@ -142,14 +139,13 @@ const CreatePage = () => {
 
   const openModal = () => {
     setIsModalOpen(true);
-    console.log(selectedCategories);
   };
   const closeModal = () => setIsModalOpen(false);
   const closeWarningModal = () => setShowWarningModal(false);
   const getImage = (ImageNumber: any) => {
-    console.log("ImageNumber ? 🚀 : ", ImageNumber);
     setImageNumber(ImageNumber);
   };
+
   return (
     <>
       <WithHeaderLayout>
@@ -236,8 +232,8 @@ const CreatePage = () => {
                 height={16}
                 alt="camera"
               />
-              <span className="text-[#6D6D6D] text-sm font-medium">
-                사진으로 필사 올리기 (1장)
+              <span className="text-[#191919] text-sm font-medium">
+                이미지로 필사 올리기 (1장)
               </span>
               <input
                 type="file"
@@ -286,17 +282,17 @@ const CreatePage = () => {
                   <li
                     className={`px-3 py-1.5 border border-[#E3E3E3] rounded-[100px] cursor-pointer ${
                       selectedCategories.includes(category?.categoryCd)
-                        ? "bg-gray-500"
+                        ? "bg-[#00C37D]"
                         : ""
                     }`}
                     key={key}
                     onClick={() => handleCategoryClick(category.categoryCd)}
                   >
                     <span
-                      className={`text-sm text-[#999] font-light ${
+                      className={`text-sm text-[#999] ${
                         selectedCategories.includes(category.categoryCd)
-                          ? "text-white"
-                          : ""
+                          ? "text-white font-semibold"
+                          : "font-light"
                       }`}
                     >
                       {category.categoryName}
@@ -308,7 +304,7 @@ const CreatePage = () => {
           </div>
           <button
             type="button"
-            className="mt-10 mb-4 w-full py-4 rounded-lg text-white text-center bg-[#6D6D6D] text-sm font-bold"
+            className="mt-10 mb-4 w-full py-4 rounded-lg text-white text-center bg-[#00C37D] text-sm font-bold"
             onClick={() => {
               if (content !== "" || file !== null) {
                 file !== null ? getImageUrl : handleSubmit("");

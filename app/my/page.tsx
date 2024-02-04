@@ -11,7 +11,7 @@ import { IPilsaList } from "../page";
 import Link from "next/link";
 
 const MyPage = () => {
-  const { profile } = useAuth();
+  const { profile, setIsSigned, setProfile } = useAuth();
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -21,14 +21,6 @@ const MyPage = () => {
   const [mounted, setMounted] = useState<boolean>(false);
   const accessToken =
     typeof window !== "undefined" && localStorage.getItem("accessToken");
-
-  const Logout = () => {
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("profile");
-      localStorage.removeItem("accessToken");
-    }
-    router.push("/");
-  };
 
   const fetchMyPilsaList = async () => {
     try {
@@ -45,7 +37,10 @@ const MyPage = () => {
         return res.data;
       }
     } catch (error) {
-      Logout();
+      localStorage.removeItem("profile");
+      localStorage.removeItem("accessToken");
+      setIsSigned(false);
+      router.push("/");
     }
   };
   const goToEditPage = () => {

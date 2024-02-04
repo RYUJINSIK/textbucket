@@ -58,9 +58,10 @@ const PilsaCard = ({ pilsaInfo, hasDetail = true }: IPilsaCardProps) => {
 
   const goToDetailPage = () => {
     const isMypage = pathName.includes("my");
-    hasDetail && isMypage
-      ? router.push(`/my/${pilsaId}`)
-      : router.push(`/pilsa/${pilsaId}`);
+    hasDetail &&
+      (isMypage
+        ? router.push(`/my/${pilsaId}`)
+        : router.push(`/pilsa/${pilsaId}`));
   };
   return (
     <div

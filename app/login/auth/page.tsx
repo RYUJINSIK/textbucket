@@ -69,7 +69,7 @@ const GetProfile = () => {
   }, [authCode]);
 
   return (
-    <div className="flex items-center justify-center w-screen h-screen">
+    <div className="flex items-center justify-center w-screen h-screen bg-white">
       <h2>
         <img src="/images/loading.gif" alt="loading" />
       </h2>

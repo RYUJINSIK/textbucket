@@ -114,8 +114,8 @@ const PilsaDetailPage = () => {
                 </span>
               </div>
             </section>
-            <section className="relative z-10">
-              <div className="flex items-center gap-x-0.5 text-[#666666] text-sm font-medium">
+            <section className="">
+              <div className="flex items-center gap-x-0.5 text-[#666666] text-sm font-medium relative z-10">
                 {pilsaInfo.categoryList &&
                   pilsaInfo.categoryList.map((cate) => (
                     <>
@@ -124,13 +124,13 @@ const PilsaDetailPage = () => {
                     </>
                   ))}
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center relative">
                 <p className="text-lg text-[#353535] font-bold font-Bokk-MeongJo">
                   {pilsaInfo.title}
                 </p>
                 {isMine && (
                   <div
-                    className="relative cursor-pointer"
+                    className="relative cursor-pointer z-40"
                     onClick={onClickToggle}
                   >
                     <Image
@@ -140,20 +140,20 @@ const PilsaDetailPage = () => {
                       height={24}
                     />
                     {toggle && (
-                      <div className="absolute -bottom-[110px] right-0 bg-white rounded-lg w-[114px] shadow-md">
-                        <Link
+                      <div className="absolute -bottom-[50px] right-0 bg-white rounded-lg w-[114px] shadow-md z-50">
+                        {/* <Link
                           href={`/pilsa/${pilsaId}/update`}
-                          className="flex items-center gap-x-2 py-4 px-5"
+                          className="flex items-center gap-x-2 py-4 px-5 border-b border-[#dedede]"
                         >
                           <img src="/icons/pencil_icon.svg" />
                           <span className="text-sm">수정하기</span>
-                        </Link>
+                        </Link> */}
                         <div
                           onClick={() => {
                             setToggle(false);
                             setIsOpen(true);
                           }}
-                          className="flex items-center gap-x-2 py-4 px-5 border-t border-[#dedede]"
+                          className="flex items-center gap-x-2 py-4 px-5 relative z-50"
                         >
                           <img
                             src="/icons/trashcan_icon.png"
@@ -168,12 +168,12 @@ const PilsaDetailPage = () => {
                 )}
               </div>
             </section>
-            <section className="relative z-10">
-              <p className="text-[#353535] font-light font-Bokk-MeongJo">
+            <section className="">
+              <p className="text-[#353535] font-light font-Bokk-MeongJo relative z-10">
                 {pilsaInfo.textContents}
               </p>
             </section>
-            <div className="flex text-[#666] text-xs font-light">
+            <div className="flex text-[#666] text-xs font-light relative z-10">
               <p>{pilsaInfo.author}</p>|<p>{pilsaInfo.publisher}</p>
             </div>
           </main>

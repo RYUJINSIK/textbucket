@@ -122,14 +122,14 @@ const BottomSheet = ({
                 onClose();
                 setSelectedImage(null);
               }}
-              className="font-bold text-sm border inline-flex items-center justify-center py-4 border-[#afafaf] w-[128px] rounded-lg"
+              className="font-bold text-sm border inline-flex items-center justify-center text-[#00C37D] py-4 border-[#00C37D] w-[128px] rounded-lg"
             >
               {closeButton}
             </button>
           )}
 
           {confirmButton && (
-            <div className="relative flex items-center justify-center w-full py-4 rounded-lg bg-[#6D6D6D]">
+            <div className="relative flex items-center justify-center w-full py-4 rounded-lg bg-[#00C37D]">
               <button
                 className="font-bold text-sm text-white"
                 onClick={sendImage}

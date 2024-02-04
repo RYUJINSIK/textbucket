@@ -126,8 +126,8 @@ const MyPilsaDetailPage = () => {
                 </span>
               </div>
             </section>
-            <section className="relative z-10">
-              <div className="flex items-center gap-x-0.5 text-[#666666] text-sm font-medium">
+            <section className="">
+              <div className="flex items-center gap-x-0.5 text-[#666666] text-sm font-medium relative z-10">
                 {pilsaInfo.categoryList &&
                   pilsaInfo.categoryList.map((cate) => (
                     <>
@@ -137,7 +137,7 @@ const MyPilsaDetailPage = () => {
                   ))}
               </div>
               <div className="flex justify-between items-center">
-                <p className="text-lg text-[#353535] font-bold font-Bokk-MeongJo">
+                <p className="text-lg text-[#353535] font-bold font-Bokk-MeongJo relative z-10">
                   {pilsaInfo.title}
                 </p>
 
@@ -152,20 +152,20 @@ const MyPilsaDetailPage = () => {
                     height={24}
                   />
                   {toggle && (
-                    <div className="absolute -bottom-[110px] right-0 bg-white rounded-lg w-[114px] shadow-md">
-                      <Link
-                        href={`/pilsa/${pilsaId}/update`}
-                        className="flex items-center gap-x-2 py-4 px-5"
-                      >
-                        <img src="/icons/pencil_icon.svg" />
-                        <span className="text-sm">수정하기</span>
-                      </Link>
+                    <div className="absolute -bottom-[50px] right-0 bg-white rounded-lg w-[114px] shadow-md z-50">
+                      {/* <Link
+                          href={`/pilsa/${pilsaId}/update`}
+                          className="flex items-center gap-x-2 py-4 px-5 border-b border-[#dedede]"
+                        >
+                          <img src="/icons/pencil_icon.svg" />
+                          <span className="text-sm">수정하기</span>
+                        </Link> */}
                       <div
                         onClick={() => {
                           setToggle(false);
                           setIsOpen(true);
                         }}
-                        className="flex items-center gap-x-2 py-4 px-5 border-t border-[#dedede]"
+                        className="flex items-center gap-x-2 py-4 px-5 relative z-50"
                       >
                         <img
                           src="/icons/trashcan_icon.png"
@@ -179,8 +179,8 @@ const MyPilsaDetailPage = () => {
                 </div>
               </div>
             </section>
-            <section className="relative z-10">
-              <p className="text-[#353535] font-light font-Bokk-MeongJo">
+            <section className="">
+              <p className="text-[#353535] font-light font-Bokk-MeongJo relative z-10">
                 {pilsaInfo.textContents}
               </p>
             </section>

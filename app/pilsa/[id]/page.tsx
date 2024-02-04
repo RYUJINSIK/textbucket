@@ -75,14 +75,18 @@ const PilsaDetailPage = () => {
       {pilsaInfo && (
         <>
           <main
-            className="pt-6 flex flex-col gap-y-5 pb-12 h-full relative px-4"
+            className="pt-6 flex flex-col gap-y-5 pb-12 h-full relative px-4 z-10"
             style={{
               minHeight: "calc(100vh - 101px)",
             }}
           >
             {pilsaInfo.backgroundImageUrl && (
               <div className="absolute top-0 left-0 w-full h-full z-0 bg-white/40">
-                <img src={pilsaInfo.backgroundImageUrl} alt="pilsaImg" />
+                <img
+                  src={`${pilsaInfo.backgroundImageUrl}.png`}
+                  alt="pilsaImg"
+                  className="w-full h-full"
+                />
               </div>
             )}
             {pilsaInfo.backgroundColor && (
@@ -91,7 +95,7 @@ const PilsaDetailPage = () => {
                 style={{ backgroundColor: pilsaInfo.backgroundColor }}
               ></div>
             )}
-            <section className="py-1 flex items-center gap-x-2">
+            <section className="py-1 flex items-center gap-x-2 relative z-10">
               <div className="w-10 h-10 rounded-full overflow-hidden cursor-pointer">
                 <Link href={"/my"}>
                   <img
@@ -110,7 +114,7 @@ const PilsaDetailPage = () => {
                 </span>
               </div>
             </section>
-            <section>
+            <section className="relative z-10">
               <div className="flex items-center gap-x-0.5 text-[#666666] text-sm font-medium">
                 {pilsaInfo.categoryList &&
                   pilsaInfo.categoryList.map((cate) => (
@@ -164,7 +168,7 @@ const PilsaDetailPage = () => {
                 )}
               </div>
             </section>
-            <section>
+            <section className="relative z-10">
               <p className="text-[#353535] font-light font-Bokk-MeongJo">
                 {pilsaInfo.textContents}
               </p>

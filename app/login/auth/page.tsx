@@ -35,9 +35,15 @@ const GetProfile = () => {
       }
     );
     if (res.status === 200) {
-      const { accessToken } = res.data;
+      const { accessToken, refreshToken, refreshTokenExpirationTime } =
+        res.data;
       setIsSigned(true);
       localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      localStorage.setItem(
+        "refreshTokenExpirationTime",
+        refreshTokenExpirationTime
+      );
       getProfile();
     } else {
       router.push("/404");
@@ -69,10 +75,10 @@ const GetProfile = () => {
   }, [authCode]);
 
   return (
-    <div className="flex items-center justify-center w-screen h-screen bg-white">
-      <h2>
+    <div className="flex items-center justify-center w-screen h-screen bg-[#dffff3]">
+      <div className="w-full bg-white h-full max-w-[390px] shadow-xl flex items-center justify-center">
         <img src="/images/loading.gif" alt="loading" />
-      </h2>
+      </div>
     </div>
   );
 };

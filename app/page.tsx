@@ -17,7 +17,7 @@ export default function Home() {
     undefined
   );
   const [mounted, setMounted] = useState<boolean>(false);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const fetchTodayPilsaLIst = async () => {
     const res = await axios.get<IPilsaList>(

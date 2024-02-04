@@ -13,7 +13,7 @@ import Link from "next/link";
 const MyPage = () => {
   const { profile, setIsSigned, setProfile } = useAuth();
   const router = useRouter();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [myPilsaList, setMyPilsaList] = useState<IPilsaList | undefined>(
     undefined

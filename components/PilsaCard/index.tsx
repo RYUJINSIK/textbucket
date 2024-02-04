@@ -65,12 +65,18 @@ const PilsaCard = ({ pilsaInfo, hasDetail = true }: IPilsaCardProps) => {
   };
   return (
     <div
-      className={`p-6 rounded-xl relative cursor-pointer`}
+      className={`p-6 rounded-xl relative cursor-pointer z-10 ${
+        backgroundImageUrl ? "" : "bg-[#F4F0FF] odd:bg-[#FDFDD0]"
+      }`}
       onClick={goToDetailPage}
     >
       {backgroundImageUrl && (
-        <div className="absolute top-0 left-0 w-full h-full z-0 bg-white/40">
-          <img src={backgroundImageUrl} alt="pilsaImg" />
+        <div className="absolute top-0 left-0 w-full h-full z-0 bg-white/40 rounded-xl overflow-hidden">
+          <img
+            src={`${backgroundImageUrl}.png`}
+            alt="pilsaImg"
+            className="w-full h-full"
+          />
         </div>
       )}
       {backgroundColor && (
@@ -79,7 +85,7 @@ const PilsaCard = ({ pilsaInfo, hasDetail = true }: IPilsaCardProps) => {
           style={{ backgroundColor: backgroundColor }}
         ></div>
       )}
-      <div className="flex items-center gap-x-0.5 text-[#666666] text-sm font-medium">
+      <div className="flex items-center gap-x-0.5 text-[#666666] text-sm font-medium relative z-10">
         {categoryList &&
           categoryList.map((cate) => (
             <>
@@ -88,13 +94,13 @@ const PilsaCard = ({ pilsaInfo, hasDetail = true }: IPilsaCardProps) => {
             </>
           ))}
       </div>
-      <p className="text-[#353535] font-bold mt-3 mb-4 font-Bokk-MeongJo">
+      <p className="text-[#353535] font-bold mt-3 mb-4 font-Bokk-MeongJo relative z-10">
         {title}
       </p>
-      <p className="text-[#353535] font-light text-ellipsis h-[224px] overflow-hidden leading-7 mb-4 font-Bokk-MeongJo">
+      <p className="text-[#353535] font-light text-ellipsis h-[224px] overflow-hidden leading-7 mb-4 font-Bokk-MeongJo relative z-10">
         {textContents}
       </p>
-      <span className="text-sm text-[#666] font-light font-Bokk-MeongJo">
+      <span className="text-sm text-[#666] font-light font-Bokk-MeongJo relative z-10">
         - {author}
       </span>
     </div>

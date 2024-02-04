@@ -2,7 +2,7 @@ import PilsaCard, { IPilsaCardItem } from "../PilsaCard";
 
 async function getData() {
   const res = await fetch(
-    `http://223.130.135.113:8080/api/v1/pilsa/list?page=${1}&size=${10}`,
+    `http://223.130.135.113:8080/api/v1/pilsa/list?page=${0}&size=${10}`,
     { cache: "force-cache" }
   );
   if (!res.ok) {

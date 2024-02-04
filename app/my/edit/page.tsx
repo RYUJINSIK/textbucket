@@ -57,6 +57,13 @@ const ProfileEditPage = () => {
     );
     if (res.status === 200 && profile) {
       setProfile({ ...profile, description: data.description });
+      localStorage.setItem(
+        "profile",
+        JSON.stringify({
+          ...profile,
+          description: data.description,
+        })
+      );
       alert("수정 성공");
     }
   };
@@ -75,6 +82,7 @@ const ProfileEditPage = () => {
             id="description"
             {...register("description")}
             maxLength={100}
+            placeholder="소개 한 마디를 써 보세요:)"
             className="border-[#e3e3e3] p-3 rounded-lg border w-full resize-none text-xs text-[#353535] h-[100px]"
           />
           <button

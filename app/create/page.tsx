@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import WithHeaderLayout from "@/components/WithHeaderLayout";
 import Image from "next/image";
 import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import BottomSheet from "@/components/BottomSheet";
 import Modal from "@/components/Modal";
 
@@ -18,8 +18,8 @@ interface ICategoryItem {
 
 const CreatePage = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const pilsaId = searchParams.get("id");
+  // const searchParams = useSearchParams();
+  // const pilsaId = searchParams.get("id");
   const [formData, setFormData] = useState({
     title: "",
     textContents: "",
@@ -40,30 +40,30 @@ const CreatePage = () => {
   const [isModified, setIsModified] = useState(false);
   const [modifyBackground, setModifyBackground] = useState("");
 
-  useEffect(() => {
-    if (pilsaId !== null) {
-      setIsModified(true);
+  // useEffect(() => {
+  //   if (pilsaId !== null) {
+  //     setIsModified(true);
 
-      axios
-        .get(
-          `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa/${pilsaId}?getMyPilsa=true`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        )
-        .then((res) => {
-          console.log("res.data", res.data);
-          setFormData(res.data);
-          setSelectedCategories(res.data.categoryLists);
-          setModifyBackground(res.data.backgroundImageUrl);
-        })
-        .catch((error) => {
-          console.log("!", error);
-        });
-    }
-  }, []);
+  //     axios
+  //       .get(
+  //         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa/${pilsaId}?getMyPilsa=true`,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${accessToken}`,
+  //           },
+  //         }
+  //       )
+  //       .then((res) => {
+  //         console.log("res.data", res.data);
+  //         setFormData(res.data);
+  //         setSelectedCategories(res.data.categoryLists);
+  //         setModifyBackground(res.data.backgroundImageUrl);
+  //       })
+  //       .catch((error) => {
+  //         console.log("!", error);
+  //       });
+  //   }
+  // }, []);
 
   useEffect(() => {
     axios

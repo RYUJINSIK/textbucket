@@ -29,6 +29,7 @@ const PilsaDetailPage = () => {
     );
     if (res.status === 200) {
       setPilsaInfo(res.data);
+      console.log("res.data", res.data);
       return res.data;
     }
   };
@@ -75,18 +76,14 @@ const PilsaDetailPage = () => {
       {pilsaInfo && (
         <>
           <main
-            className="pt-6 flex flex-col gap-y-5 pb-12 h-full relative px-4 z-10"
+            className="pt-6 flex flex-col gap-y-5 pb-12 h-full relative px-4"
             style={{
               minHeight: "calc(100vh - 101px)",
             }}
           >
             {pilsaInfo.backgroundImageUrl && (
               <div className="absolute top-0 left-0 w-full h-full z-0 bg-white/40">
-                <img
-                  src={`${pilsaInfo.backgroundImageUrl}.png`}
-                  alt="pilsaImg"
-                  className="w-full h-full"
-                />
+                <img src={pilsaInfo.backgroundImageUrl} alt="pilsaImg" />
               </div>
             )}
             {pilsaInfo.backgroundColor && (
@@ -95,7 +92,7 @@ const PilsaDetailPage = () => {
                 style={{ backgroundColor: pilsaInfo.backgroundColor }}
               ></div>
             )}
-            <section className="py-1 flex items-center gap-x-2 relative z-10">
+            <section className="py-1 flex items-center gap-x-2">
               <div className="w-10 h-10 rounded-full overflow-hidden cursor-pointer">
                 <Link href={"/my"}>
                   <img
@@ -114,8 +111,8 @@ const PilsaDetailPage = () => {
                 </span>
               </div>
             </section>
-            <section className="">
-              <div className="flex items-center gap-x-0.5 text-[#666666] text-sm font-medium relative z-10">
+            <section>
+              <div className="flex items-center gap-x-0.5 text-[#666666] text-sm font-medium">
                 {pilsaInfo.categoryList &&
                   pilsaInfo.categoryList.map((cate) => (
                     <>
@@ -124,13 +121,13 @@ const PilsaDetailPage = () => {
                     </>
                   ))}
               </div>
-              <div className="flex justify-between items-center relative">
+              <div className="flex justify-between items-center">
                 <p className="text-lg text-[#353535] font-bold font-Bokk-MeongJo">
                   {pilsaInfo.title}
                 </p>
                 {isMine && (
                   <div
-                    className="relative cursor-pointer z-40"
+                    className="relative cursor-pointer"
                     onClick={onClickToggle}
                   >
                     <Image
@@ -140,20 +137,20 @@ const PilsaDetailPage = () => {
                       height={24}
                     />
                     {toggle && (
-                      <div className="absolute -bottom-[50px] right-0 bg-white rounded-lg w-[114px] shadow-md z-50">
-                        {/* <Link
+                      <div className="absolute -bottom-[110px] right-0 bg-white rounded-lg w-[114px] shadow-md">
+                        <Link
                           href={`/pilsa/${pilsaId}/update`}
-                          className="flex items-center gap-x-2 py-4 px-5 border-b border-[#dedede]"
+                          className="flex items-center gap-x-2 py-4 px-5"
                         >
                           <img src="/icons/pencil_icon.svg" />
                           <span className="text-sm">수정하기</span>
-                        </Link> */}
+                        </Link>
                         <div
                           onClick={() => {
                             setToggle(false);
                             setIsOpen(true);
                           }}
-                          className="flex items-center gap-x-2 py-4 px-5 relative z-50"
+                          className="flex items-center gap-x-2 py-4 px-5 border-t border-[#dedede]"
                         >
                           <img
                             src="/icons/trashcan_icon.png"
@@ -168,12 +165,22 @@ const PilsaDetailPage = () => {
                 )}
               </div>
             </section>
-            <section className="">
-              <p className="text-[#353535] font-light font-Bokk-MeongJo relative z-10">
+            <section>
+              {pilsaInfo.pilsaImages[0].imageUrl && (
+                <div className="left-0 w-full h-400 z-0 bg-white/40">
+                  <img
+                    src={pilsaInfo.pilsaImages[0].imageUrl}
+                    alt="pilsaImg"
+                    width={400}
+                    height={400}
+                  />
+                </div>
+              )}
+              <p className="text-[#353535] font-light font-Bokk-MeongJo">
                 {pilsaInfo.textContents}
               </p>
             </section>
-            <div className="flex text-[#666] text-xs font-light relative z-10">
+            <div className="flex text-[#666] text-xs font-light">
               <p>{pilsaInfo.author}</p>|<p>{pilsaInfo.publisher}</p>
             </div>
           </main>

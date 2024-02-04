@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import WithHeaderLayout from "@/components/WithHeaderLayout";
 import Image from "next/image";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import BottomSheet from "@/components/BottomSheet";
 import Modal from "@/components/Modal";
 
@@ -18,15 +18,17 @@ interface ICategoryItem {
 
 const CreatePage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const pilsaId = searchParams.get("id");
   const [formData, setFormData] = useState({
     title: "",
-    content: "",
+    textContents: "",
     file: null as any,
     author: "",
     publisher: "",
     category: [] as any,
   });
-  const { title, content, file, author, publisher, category } = formData;
+  const { title, textContents, file, author, publisher, category } = formData;
   const [previewURL, setPreviewURL] = useState<any>(null);
   const [selectedCategories, setSelectedCategories] = useState<any>([]);
   const accessToken =
@@ -35,6 +37,33 @@ const CreatePage = () => {
   const [showWarningModal, setShowWarningModal] = useState(false);
   const [imageNumber, setImageNumber] = useState(0);
   const [categoryList, setCategoryList] = useState<any>([]);
+  const [isModified, setIsModified] = useState(false);
+  const [modifyBackground, setModifyBackground] = useState("");
+
+  useEffect(() => {
+    if (pilsaId !== null) {
+      setIsModified(true);
+
+      axios
+        .get(
+          `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa/${pilsaId}?getMyPilsa=true`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log("res.data", res.data);
+          setFormData(res.data);
+          setSelectedCategories(res.data.categoryLists);
+          setModifyBackground(res.data.backgroundImageUrl);
+        })
+        .catch((error) => {
+          console.log("!", error);
+        });
+    }
+  }, []);
 
   useEffect(() => {
     axios
@@ -81,8 +110,7 @@ const CreatePage = () => {
     }
   };
 
-  const getImageUrl = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
+  const getImageUrl = async () => {
     const imageData = new FormData();
     imageData.append("files", formData.file);
     console.log(formData.file);
@@ -94,6 +122,8 @@ const CreatePage = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          maxBodyLength: Infinity,
+          maxContentLength: Infinity,
         }
       );
       handleSubmit(response.data[0].imageUrl);
@@ -107,7 +137,7 @@ const CreatePage = () => {
       title: title,
       author: author,
       publisher: publisher,
-      textContents: content,
+      textContents: textContents,
       backgroundImageUrl:
         imageNumber !== 0 ? `/images/bg_image${imageNumber}` : "",
       backgroundColor: "",
@@ -126,6 +156,7 @@ const CreatePage = () => {
           },
         }
       );
+      console.log(response.data);
       router.push("/");
     } catch (error) {
       console.error(error);
@@ -192,10 +223,11 @@ const CreatePage = () => {
           <div
             className="my-3 rounded-xl py-5 px-4 h-[224px] w-full bg-[#F8F8F8] "
             style={{
-              backgroundImage:
-                imageNumber !== null
-                  ? `url('/images/bg_image${imageNumber + 1}.png')`
-                  : "none",
+              backgroundImage: isModified
+                ? `url('${modifyBackground}.png')`
+                : imageNumber !== null
+                ? `url('/images/bg_image${imageNumber + 1}.png')`
+                : "none",
               backgroundSize: "cover", // 배경 이미지 크기 조절 (선택적)
             }}
           >
@@ -204,7 +236,7 @@ const CreatePage = () => {
               id="content"
               className="bg-transparent w-full h-full resize-none focus:outline-none text-sm placeholder-[#999]"
               placeholder="필사 글 또는 이미지 필사의 내 생각을 입력해 주세요."
-              value={content}
+              value={textContents}
               onChange={handleInputChange}
             />
           </div>
@@ -305,15 +337,16 @@ const CreatePage = () => {
           <button
             type="button"
             className="mt-10 mb-4 w-full py-4 rounded-lg text-white text-center bg-[#00C37D] text-sm font-bold"
+            disabled={isModified ? true : false}
             onClick={() => {
-              if (content !== "" || file !== null) {
-                file !== null ? getImageUrl : handleSubmit("");
+              if (textContents !== "" || file !== null) {
+                file !== null ? getImageUrl() : handleSubmit("");
               } else {
                 setShowWarningModal(true);
               }
             }}
           >
-            필사 올리기
+            {isModified ? "필사 수정하기" : "필사 올리기"}
           </button>
         </form>
       </WithHeaderLayout>
@@ -321,7 +354,7 @@ const CreatePage = () => {
         open={isModalOpen}
         onClose={closeModal}
         title={title}
-        content={content}
+        content={textContents}
         author={author}
         publisher={publisher}
         category={selectedCategories}

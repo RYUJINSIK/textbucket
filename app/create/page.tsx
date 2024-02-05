@@ -232,8 +232,8 @@ const CreatePage = () => {
             }}
           >
             <textarea
-              name="content"
-              id="content"
+              name="textContents"
+              id="textContents"
               className="bg-transparent w-full h-full resize-none focus:outline-none text-sm placeholder-[#999]"
               placeholder="필사 글 또는 이미지 필사의 내 생각을 입력해 주세요."
               value={textContents}

@@ -1,18 +1,31 @@
-# 서비스 소개
+# 📝 textbucket - 개인 필사 기록 서비스
+![1](https://github.com/Potenday-PILSA/pilsa-fe/assets/64420030/de7d0fce-b8f9-4e48-abc3-cae5ed98d33e)
 
-- 필사에 관심 있는 누구나 필사를 통해 이루고 싶은 개인의 목표를 지속 가능하게 도와주는 서비스
+## 프로젝트 기본정보
+- `1차 프로젝트 기간` : 2024 / 01 / 26 ~ 2024 / 02 / 04
+- `2차 프로젝트 기간` : 2024 / 02 / 06 ~ ing
+- `배포링크` : [textbucket](https://textbucket.vercel.app/)
 
-## 기술 스택
+## 프로젝트 소개
+![2](https://github.com/Potenday-PILSA/pilsa-fe/assets/64420030/32478dc8-066c-4337-9fe6-fd04ccd8ffdd)
 
-- Next.js, Styled-component, Typescript
+## 주요 기능
+![6](https://github.com/Potenday-PILSA/pilsa-fe/assets/64420030/09bdb390-85c3-45ce-97ac-466649097351)
+![7](https://github.com/Potenday-PILSA/pilsa-fe/assets/64420030/5ba22a94-a337-474d-88d0-041e5894e09a)
+![8](https://github.com/Potenday-PILSA/pilsa-fe/assets/64420030/47dfe18e-83d9-4abd-bbfa-a1e4908c7d19)
 
-## 실행 방법
+## 화면 구성도
+![5](https://github.com/Potenday-PILSA/pilsa-fe/assets/64420030/d58d1b8b-0f60-4670-91c3-e2dc527facbd)
 
-- node 18.17.0 이상
+## 기술스택
 
-```
-yarn
-yarn dev
-```
+#### `Development`
 
-### 폴더 구조
+<img src="https://img.shields.io/badge/react-61DAFB?style=flat-square&logo=react&logoColor=white"> <img src="https://img.shields.io/badge/next.js-000000?style=flat-square&logo=next.js&logoColor=white"> <img src="https://img.shields.io/badge/typescript-3178C6?style=flat-square&logo=typescript&logoColor=white"> <img src="https://img.shields.io/badge/redux-764ABC?style=flat-square&logo=redux&logoColor=white"> <img src="https://img.shields.io/badge/spring-6DB33F?style=flat-square&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/tailwindcss-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white"> 
+
+#### `Communication`
+<img src="https://img.shields.io/badge/slack-4A154B?style=flat-square&logo=slack&logoColor=white"> <img src="https://img.shields.io/badge/notion-000000?style=flat-square&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/discord-5865F2?style=flat-square&logo=discord&logoColor=white"> <img src="https://img.shields.io/badge/figma-F24E1E?style=flat-square&logo=figma&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=flat-square&logo=github&logoColor=white"> 
+
+## 개발 예정사항
+![9](https://github.com/Potenday-PILSA/pilsa-fe/assets/64420030/cb440883-9706-43db-a0aa-0087b4136e30)
+

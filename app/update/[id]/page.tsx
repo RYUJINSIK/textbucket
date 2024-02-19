@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import WithHeaderLayout from "@/components/WithHeaderLayout";
 import Image from "next/image";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import BottomSheet from "@/components/BottomSheet";
 import Modal from "@/components/Modal";
 
@@ -16,8 +16,10 @@ interface ICategoryItem {
   description: string;
 }
 
-const CreatePage = () => {
+const UpdatePage = () => {
   const router = useRouter();
+  const params = useParams();
+  const pilsaId = params.id;
   const [formData, setFormData] = useState({
     title: "",
     textContents: "",
@@ -35,6 +37,10 @@ const CreatePage = () => {
   const [showWarningModal, setShowWarningModal] = useState(false);
   const [imageNumber, setImageNumber] = useState(0);
   const [categoryList, setCategoryList] = useState<any>([]);
+  const [isModified, setIsModified] = useState(false);
+  const [modifyBackground, setModifyBackground] = useState("");
+  const registeredCategories: number[] = [];
+  const [registeredImage, setRegisteredImage] = useState("");
 
   useEffect(() => {
     axios
@@ -45,12 +51,41 @@ const CreatePage = () => {
         },
       })
       .then((res) => {
-        const categories = res.data.categories; // "categories" 키에서 배열을 추출
+        const categories = res.data.categories;
         setCategoryList(categories);
       })
       .catch((error) => {
         console.log("!", error);
       });
+
+    if (pilsaId !== null) {
+      setIsModified(true);
+
+      axios
+        .get(
+          `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa/${pilsaId}?getMyPilsa=true`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log("res.data ? : ", res.data);
+          setFormData(res.data);
+          setSelectedCategories(res.data.categoryLists);
+          setModifyBackground(res.data.backgroundImageUrl);
+          res.data.categoryLists.map((cate: { categoryCd: number }) =>
+            registeredCategories.push(cate.categoryCd)
+          );
+          setSelectedCategories(registeredCategories);
+          setRegisteredImage(res.data.pilsaImages[0].imageUrl);
+          setPreviewURL(res.data.pilsaImages[0].imageUrl);
+        })
+        .catch((error) => {
+          console.log("!", error);
+        });
+    }
   }, []);
 
   const handleCategoryClick = (category: number) => {
@@ -81,24 +116,32 @@ const CreatePage = () => {
   };
 
   const getImageUrl = async () => {
+    console.log(registeredImage);
+
     const imageData = new FormData();
     imageData.append("files", formData.file);
     console.log(formData.file);
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/image`,
-        imageData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          maxBodyLength: Infinity,
-          maxContentLength: Infinity,
-        }
-      );
-      handleSubmit(response.data[0].imageUrl);
-    } catch (error) {
-      console.error(error);
+    if (formData.file) {
+      // 기존 이미지 외 새로운 이미지로 수정 했을 시
+      try {
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/image`,
+          imageData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            maxBodyLength: Infinity,
+            maxContentLength: Infinity,
+          }
+        );
+        handleSubmit(response.data[0].imageUrl);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      // 기존이미지 유지했을 시
+      handleSubmit(registeredImage);
     }
   };
 
@@ -117,8 +160,8 @@ const CreatePage = () => {
 
     console.log("requestBody ? : ", requestBody);
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa`,
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa/${pilsaId}`,
         requestBody,
         {
           headers: {
@@ -142,7 +185,10 @@ const CreatePage = () => {
   const openModal = () => {
     setIsModalOpen(true);
   };
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsModified(false);
+  };
   const closeWarningModal = () => setShowWarningModal(false);
   const getImage = (ImageNumber: any) => {
     setImageNumber(ImageNumber);
@@ -167,7 +213,7 @@ const CreatePage = () => {
           {formData.file !== null
             ? previewURL && (
                 <div className="w-full h-[260px] relative ">
-                  <Image
+                  <img
                     src={previewURL}
                     alt="미리보기"
                     width={0}
@@ -194,7 +240,11 @@ const CreatePage = () => {
           <div
             className="my-3 rounded-xl py-5 px-4 h-[224px] w-full bg-[#F8F8F8] "
             style={{
-              backgroundImage: `url('/images/bg_image${imageNumber}.png')`,
+              backgroundImage: isModified
+                ? `url('${modifyBackground}.png')`
+                : imageNumber !== null
+                ? `url('/images/bg_image${imageNumber}.png')`
+                : "none",
               backgroundSize: "cover", // 배경 이미지 크기 조절 (선택적)
             }}
           >
@@ -312,7 +362,7 @@ const CreatePage = () => {
               }
             }}
           >
-            필사 올리기
+            필사 수정하기
           </button>
         </form>
       </WithHeaderLayout>
@@ -341,4 +391,4 @@ const CreatePage = () => {
     </>
   );
 };
-export default CreatePage;
+export default UpdatePage;

@@ -11,7 +11,7 @@ export interface IPilsaCardItem {
   author: string;
   backgroundColor: string;
   backgroundImageUrl: string;
-  categoryList: ICategoryItem[];
+  categoryLists: ICategoryItem[];
   memberInfoResponse: IProfile;
   pilsaId: string;
   pilsaImages: IImageItem[];

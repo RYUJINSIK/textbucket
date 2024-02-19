@@ -23,9 +23,10 @@ const MyPilsaDetailPage = () => {
   const accessToken =
     typeof window !== "undefined" && localStorage.getItem("accessToken");
 
+  const isMine = profile?.id === pilsaInfo?.memberInfoResponse.id;
   const fetchPilsaItem = async (pilsaId: string) => {
     const res = await axios.get<IPilsaCardItem>(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa/${pilsaId}?getMyPilsa=true`,
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa/${pilsaId}?getMyPilsa=${isMine}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -128,8 +129,8 @@ const MyPilsaDetailPage = () => {
             </section>
             <section className="">
               <div className="flex items-center gap-x-0.5 text-[#666666] text-sm font-medium relative z-10">
-                {pilsaInfo.categoryList &&
-                  pilsaInfo.categoryList.map((cate) => (
+                {pilsaInfo.categoryLists &&
+                  pilsaInfo.categoryLists.map((cate) => (
                     <>
                       <span>{cate.categoryName}</span>
                       <span className="last:hidden">∙</span>
@@ -153,13 +154,13 @@ const MyPilsaDetailPage = () => {
                   />
                   {toggle && (
                     <div className="absolute -bottom-[50px] right-0 bg-white rounded-lg w-[114px] shadow-md z-50">
-                      {/* <Link
-                          href={`/pilsa/${pilsaId}/update`}
-                          className="flex items-center gap-x-2 py-4 px-5 border-b border-[#dedede]"
-                        >
-                          <img src="/icons/pencil_icon.svg" />
-                          <span className="text-sm">수정하기</span>
-                        </Link> */}
+                      <Link
+                        href={`/update/${pilsaId}`}
+                        className="flex items-center gap-x-2 py-4 px-5 border-b border-[#dedede]"
+                      >
+                        <img src="/icons/pencil_icon.svg" />
+                        <span className="text-sm">수정하기</span>
+                      </Link>
                       <div
                         onClick={() => {
                           setToggle(false);
@@ -180,11 +181,21 @@ const MyPilsaDetailPage = () => {
               </div>
             </section>
             <section className="">
+              {pilsaInfo.pilsaImages[0].imageUrl && (
+                <div className="left-0 w-full h-400 relative z-10 bg-white/40">
+                  <img
+                    src={pilsaInfo.pilsaImages[0].imageUrl}
+                    alt="pilsaImg"
+                    width={400}
+                    height={400}
+                  />
+                </div>
+              )}
               <p className="text-[#353535] font-light font-Bokk-MeongJo relative z-10">
                 {pilsaInfo.textContents}
               </p>
             </section>
-            <div className="flex text-[#666] text-xs font-light">
+            <div className="flex text-[#666] text-xs font-light z-10">
               <p>{pilsaInfo.author}</p>|<p>{pilsaInfo.publisher}</p>
             </div>
           </main>

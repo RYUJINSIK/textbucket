@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import AuthProvider from "@/shared/contexts/AuthContext";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "텍스트버킷, 좋은 글을 내 것으로.",
@@ -10,6 +11,12 @@ export const metadata: Metadata = {
     icon: "/icons/favicon_16.svg",
   },
 };
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 export default function RootLayout({
   children,
@@ -22,6 +29,10 @@ export default function RootLayout({
         <AuthProvider>
           <div id="global-modal">{children}</div>
         </AuthProvider>
+        <Script
+          src="https://developers.kakao.com/sdk/js/kakao.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

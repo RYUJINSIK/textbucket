@@ -35,7 +35,6 @@ const MyPilsaDetailPage = () => {
     );
     if (res.status === 200) {
       setPilsaInfo(res.data);
-      console.log("res.data", res.data);
       return res.data;
     }
   };

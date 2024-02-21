@@ -29,7 +29,6 @@ const LikeButton = ({ pilsaId, liked }: LikeButtonProps) => {
           },
         }
       );
-      console.log(response.data);
       setIsLiked(!isLiked);
     } catch (error) {
       console.error(error);

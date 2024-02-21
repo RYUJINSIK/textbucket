@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import KakaoShareButton from "@/components/KakaoShare";
+// import KakaoShareButton from "@/components/KakaoShare";
 import LikeButton from "@/components/LikeButton";
 
 const PilsaDetailPage = () => {
@@ -38,7 +38,6 @@ const PilsaDetailPage = () => {
     );
     if (res.status === 200) {
       setPilsaInfo(res.data);
-      console.log("res.data", res.data);
       return res.data;
     }
   };
@@ -143,10 +142,10 @@ const PilsaDetailPage = () => {
                     liked={pilsaInfo.isLikedAble}
                     pilsaId={pilsaId as string}
                   />
-                  <KakaoShareButton
+                  {/* <KakaoShareButton
                     title={pilsaInfo.title}
                     description={pilsaInfo.textContents}
-                  />
+                  /> */}
                   {isMine ? (
                     <div
                       className="relative cursor-pointer"

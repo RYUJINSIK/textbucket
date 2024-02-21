@@ -83,7 +83,6 @@ const CreatePage = () => {
   const getImageUrl = async () => {
     const imageData = new FormData();
     imageData.append("files", formData.file);
-    console.log(formData.file);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/image`,
@@ -114,8 +113,6 @@ const CreatePage = () => {
       categoryCd: selectedCategories,
       images: [{ imageUrl: imageUrl, thumbnail: "Y", imageSeq: 0 }],
     };
-
-    console.log("requestBody ? : ", requestBody);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa`,
@@ -127,7 +124,6 @@ const CreatePage = () => {
           },
         }
       );
-      console.log(response.data);
       router.push("/");
     } catch (error) {
       console.error(error);

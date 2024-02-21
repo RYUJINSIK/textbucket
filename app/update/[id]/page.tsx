@@ -71,7 +71,6 @@ const UpdatePage = () => {
           }
         )
         .then((res) => {
-          console.log("res.data ? : ", res.data);
           setFormData(res.data);
           setSelectedCategories(res.data.categoryLists);
           setModifyBackground(res.data.backgroundImageUrl);
@@ -116,8 +115,6 @@ const UpdatePage = () => {
   };
 
   const getImageUrl = async () => {
-    console.log(registeredImage);
-
     const imageData = new FormData();
     imageData.append("files", formData.file);
     console.log(formData.file);
@@ -157,8 +154,6 @@ const UpdatePage = () => {
       categoryCd: selectedCategories,
       images: [{ imageUrl: imageUrl, thumbnail: "Y", imageSeq: 0 }],
     };
-
-    console.log("requestBody ? : ", requestBody);
     try {
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa/${pilsaId}`,
@@ -170,7 +165,6 @@ const UpdatePage = () => {
           },
         }
       );
-      console.log(response.data);
       router.push("/");
     } catch (error) {
       console.error(error);

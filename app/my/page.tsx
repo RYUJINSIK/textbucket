@@ -7,7 +7,7 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { IPilsaList } from "../page";
+import { IPilsaList, LikePilsaList } from "../page";
 import Link from "next/link";
 
 const MyPage = () => {
@@ -16,6 +16,9 @@ const MyPage = () => {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [myPilsaList, setMyPilsaList] = useState<IPilsaList | undefined>(
+    undefined
+  );
+  const [likePilsaList, setLikePilsaList] = useState<LikePilsaList | undefined>(
     undefined
   );
   const [mounted, setMounted] = useState<boolean>(false);
@@ -43,12 +46,35 @@ const MyPage = () => {
       router.push("/");
     }
   };
+
+  const fetchLikePilsaList = async () => {
+    try {
+      const res = await axios.get<IPilsaList>(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/like?page=${page}&size=${pageSize}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (res.status === 200) {
+        setLikePilsaList(res.data);
+        return res.data;
+      }
+    } catch (error) {
+      localStorage.removeItem("profile");
+      localStorage.removeItem("accessToken");
+      setIsSigned(false);
+      router.push("/");
+    }
+  };
   const goToEditPage = () => {
     router.push("/my/edit");
   };
 
   useEffect(() => {
     fetchMyPilsaList();
+    fetchLikePilsaList();
   }, []);
 
   useEffect(() => {
@@ -118,6 +144,23 @@ const MyPage = () => {
                   </Link>
                 </div>
               )}
+            </div>
+            <br />
+            <div className="flex">
+              <h3 className="text-lg font-bold">내가 좋아하는 필사</h3>
+              {likePilsaList && (
+                <sup className="text-xs text-[#777]">
+                  {likePilsaList.totalCount}
+                </sup>
+              )}
+            </div>
+            <div className="mt-3 flex flex-col gap-y-4">
+              {likePilsaList?.totalCount !== 0
+                ? likePilsaList &&
+                  likePilsaList.pilsaLists.map((pilsaInfo) => (
+                    <PilsaCard pilsaInfo={pilsaInfo} key={pilsaInfo.pilsaId} />
+                  ))
+                : null}
             </div>
           </section>
         </main>

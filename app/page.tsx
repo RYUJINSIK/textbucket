@@ -11,6 +11,11 @@ export interface IPilsaList {
   pilsaLists: IPilsaCardItem[];
 }
 
+export interface LikePilsaList {
+  totalCount: number;
+  pilsaLists: IPilsaCardItem[];
+}
+
 export default function Home() {
   const [todayList, setTodayList] = useState<IPilsaList | undefined>(undefined);
   const [recommenList, setRecommenList] = useState<IPilsaList | undefined>(

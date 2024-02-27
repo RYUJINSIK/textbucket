@@ -198,7 +198,7 @@ const PilsaDetailPage = () => {
                   />
                 </div>
               )}
-              <p className="text-[#353535] font-light font-Bokk-MeongJo relative z-10">
+              <p className="text-[#353535] font-light font-Bokk-MeongJo relative whitespace-pre-wrap z-10">
                 {pilsaInfo.textContents}
               </p>
             </section>

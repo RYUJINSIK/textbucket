@@ -98,7 +98,7 @@ const PilsaCard = ({ pilsaInfo, hasDetail = true }: IPilsaCardProps) => {
       <p className="text-[#353535] font-bold mt-3 mb-4 font-Bokk-MeongJo relative z-10">
         {title}
       </p>
-      <p className="text-[#353535] font-light text-ellipsis h-[224px] overflow-hidden leading-7 mb-4 font-Bokk-MeongJo relative z-10">
+      <p className="text-[#353535] font-light text-ellipsis h-[224px] overflow-hidden leading-7 mb-4 font-Bokk-MeongJo  whitespace-pre-wrap relative z-10">
         {textContents}
       </p>
       <span className="text-sm text-[#666] font-light font-Bokk-MeongJo relative z-10">

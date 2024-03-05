@@ -10,6 +10,8 @@ import axios from "axios";
 import Modal from "@/components/Modal";
 
 export interface IProfileFormProps {
+  imageUrl: string;
+  nickName: string;
   description: string;
 }
 
@@ -29,7 +31,11 @@ const ProfileEditPage = () => {
   });
 
   useEffect(() => {
-    reset({ description: profile?.description });
+    reset({
+      imageUrl: profile?.imageUrl,
+      nickName: profile?.nickName,
+      description: profile?.description,
+    });
   }, []);
 
   const onClickLogout = () => {
@@ -56,11 +62,18 @@ const ProfileEditPage = () => {
       }
     );
     if (res.status === 200 && profile) {
-      setProfile({ ...profile, description: data.description });
+      setProfile({
+        ...profile,
+        imageUrl: data.imageUrl,
+        nickName: data.nickName,
+        description: data.description,
+      });
       localStorage.setItem(
         "profile",
         JSON.stringify({
           ...profile,
+          imageUrl: data.imageUrl,
+          nickName: data.nickName,
           description: data.description,
         })
       );
@@ -73,8 +86,45 @@ const ProfileEditPage = () => {
         className="flex flex-col h-full justify-between px-4"
         style={{ minHeight: "calc(100vh - 72px)" }}
       >
-        <form className="mt-4 px-4" onSubmit={handleSubmit(onSubmit)}>
+        <div className="mt-4 px-4">
           <h3 className="text-lg font-bold">프로필 편집</h3>
+          <br />
+          <div className="grid place-items-center">
+            <div className="flex-grow-0 flex-shrink-0 w-[88px] h-[88px] relative rounded-full bg-[#ededed]">
+              <img
+                className="w-full h-full rounded-full overflow-hidden"
+                src={profile?.imageUrl}
+                alt="profile"
+              />
+
+              <Image
+                src="/icons/camera.png"
+                width={24}
+                height={24}
+                alt="이미지삭제"
+                onClick={() => {
+                  alert("zz");
+                }}
+                className="w-6 h-6 absolute left-16 top-16"
+              />
+            </div>
+          </div>
+
+          <div className="flex justify-between items-center">
+            <p className="mt-5 mb-2 font-medium text-[#131313] text-sm">
+              닉네임
+            </p>
+            <p className="mt-5 mb-2 font-medium text-[#777777] text-sm">
+              {profile?.nickName.length} / 10
+            </p>
+          </div>
+          <input
+            type="text"
+            id="nickName"
+            {...register("nickName")}
+            maxLength={10}
+            className="border-[#e3e3e3] p-3 rounded-lg border w-full resize-none text-center text-base text-[#353535] h-[50px]"
+          />
           <p className="mt-5 mb-2 font-medium text-[#131313] text-sm">
             소개 한 마디
           </p>
@@ -85,15 +135,16 @@ const ProfileEditPage = () => {
             placeholder="소개 한 마디를 써 보세요:)"
             className="border-[#e3e3e3] p-3 rounded-lg border w-full resize-none text-xs text-[#353535] h-[100px]"
           />
+        </div>
+        <div className="flex items-end justify-end">
           <button
             type="submit"
-            className="mt-5 w-full py-4 rounded-lg text-white text-center bg-[#00C37D] text-sm font-bold"
+            onClick={handleSubmit(onSubmit)}
+            className="mt-5 mb-5 w-full py-4 rounded-lg text-white text-center bg-[#00C37D] text-sm font-bold"
           >
             적용하기
           </button>
-        </form>
-        <div className="flex items-end justify-end">
-          <div
+          {/* <div
             className="flex items-center gap-x-1 cursor-pointer"
             onClick={onClickLogout}
           >
@@ -104,7 +155,7 @@ const ProfileEditPage = () => {
               alt="logout"
             />
             <span className="text-[#999] font-bold">로그아웃</span>
-          </div>
+          </div> */}
         </div>
       </div>
       <Modal

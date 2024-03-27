@@ -53,7 +53,7 @@ const ProfileEditPage = () => {
   const handleNickNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, nickName: e.target.value });
   };
-  const handleDescriptionChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setFormData({ ...formData, description: e.target.value });
   };
 

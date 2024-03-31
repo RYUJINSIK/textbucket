@@ -458,7 +458,6 @@ const ChallengePage = () => {
                 className="border-[#e3e3e3] p-3 rounded-lg border w-full resize-none text-xs text-[#353535] h-[100px]"
               />
             </div>
-            {/* step 3 */}
           </div>
         </div>
         <div className={`flex items-end justify-end`}>

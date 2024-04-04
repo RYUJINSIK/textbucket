@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useState, useEffect } from "react";
 import Image from "next/image";
 // 달력
 import {
@@ -31,6 +31,13 @@ const ChallengeStep2 = () => {
     { label: "30일", interval: "30days" },
     { label: "직접설정", interval: "self" },
   ];
+
+  useEffect(() => {
+    const weekLater = addWeeks(new Date(), 1);
+    setStartDate(new Date());
+    setEndDate(weekLater);
+    setIsCustomSelecting(false);
+  }, []);
 
   const goToPreviousMonth = () => {
     setCurrentDate(subMonths(currentDate, 1));
@@ -150,7 +157,7 @@ const ChallengeStep2 = () => {
             <div
               key={day.getTime()}
               onClick={() => handleDateClick(day)}
-              className={`flex items-center justify-center text-center text-sm w-10 h-10 cursor-pointer mb-1 ${
+              className={`flex items-center justify-center text-center text-sm w-12 h-12 cursor-pointer mb-1 ${
                 isSameMonth(day, currentDate) ? "" : "text-gray-400"
               } 
               ${

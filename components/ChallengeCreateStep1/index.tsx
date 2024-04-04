@@ -49,7 +49,6 @@ const ChallengeStep1 = () => {
   };
   return (
     <>
-      {/* step 1 */}
       <div className="flex flex-col justify-center items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-1.5 py-2">
         <p className="self-stretch flex-grow-0 flex-shrink-0 w-[328px] text-lg font-bold text-left text-[#353535]">
           어떤 필사를 도전할까요?
@@ -57,35 +56,34 @@ const ChallengeStep1 = () => {
         <p className="self-stretch flex-grow-0 flex-shrink-0 w-[328px] text-xs text-left text-[#777]">
           최대 3개까지 선택할 수 있어요
         </p>
-      </div>
-      <div className="flex justify-center items-start flex-grow-0 flex-shrink-0 w-[328px] gap-2 px-2 rounded-xl">
-        <ul className="flex flex-wrap items-center justify-center gap-2.5 px-2">
-          {Object.entries<ICategoryItem>(categoryList).map(
-            ([key, category]) => (
-              <li
-                className={`px-3 py-1.5 border border-[#E3E3E3] rounded-[100px] cursor-pointer ${
-                  selectedCategories.includes(category?.categoryCd)
-                    ? "bg-[#00C37D]"
-                    : ""
-                }`}
-                key={key}
-                onClick={() => handleCategoryClick(category.categoryCd)}
-              >
-                <span
-                  className={`text-sm text-[#999] ${
-                    selectedCategories.includes(category.categoryCd)
-                      ? "text-white font-semibold"
-                      : "font-light"
+        <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 w-[328px] h-full gap-2 px-2 rounded-xl">
+          <ul className="flex flex-wrap items-center justify-center gap-2.5 px-2">
+            {Object.entries<ICategoryItem>(categoryList).map(
+              ([key, category]) => (
+                <li
+                  className={`px-3 py-1.5 border border-[#E3E3E3] rounded-[100px] cursor-pointer ${
+                    selectedCategories.includes(category?.categoryCd)
+                      ? "bg-[#00C37D]"
+                      : ""
                   }`}
+                  key={key}
+                  onClick={() => handleCategoryClick(category.categoryCd)}
                 >
-                  {category.categoryName}
-                </span>
-              </li>
-            )
-          )}
-        </ul>
+                  <span
+                    className={`text-sm text-[#999] ${
+                      selectedCategories.includes(category.categoryCd)
+                        ? "text-white font-semibold"
+                        : "font-light"
+                    }`}
+                  >
+                    {category.categoryName}
+                  </span>
+                </li>
+              )
+            )}
+          </ul>
+        </div>
       </div>
-      {/* step 1 */}
     </>
   );
 };

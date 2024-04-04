@@ -1,14 +1,35 @@
 "use client";
 import { useState, useEffect, ChangeEvent } from "react";
 import WithHeaderLayout from "@/components/WithHeaderLayout";
+import ChallengeCreateStep1 from "@/components/ChallengeCreateStep1";
+import ChallengeCreateStep2 from "@/components/ChallengeCreateStep2";
+import ChallengeCreateStep3 from "@/components/ChallengeCreateStep3";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 const ChallengeCreatePage = () => {
   const [step, setStep] = useState(1);
+  const StepIndicator = ({ step }: { step: number }) => {
+    const stepClasses = [
+      "flex-grow-0 flex-shrink-0 w-[108px] h-1 rounded-[90px]",
+      "bg-[#00c37d]",
+      "bg-[#c4c4c4]",
+    ];
 
-  const router = useRouter();
-  const accessToken =
-    typeof window !== "undefined" && localStorage.getItem("accessToken");
+    return (
+      <div className="mt-2 flex flex-col justify-start items-start gap-2 px-4">
+        <div className="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-0.5 py-0.5">
+          {[1, 2, 3].map((index) => (
+            <div
+              key={index}
+              className={`${stepClasses[0]} ${
+                step >= index ? stepClasses[1] : stepClasses[2]
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <WithHeaderLayout>
@@ -31,48 +52,36 @@ const ChallengeCreatePage = () => {
               </p>
             </div>
           </div>
-          <div className="mt-2 flex flex-col justify-start items-start gap-2 px-4">
-            <div className="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-0.5 py-0.5">
-              <div className="flex-grow-0 flex-shrink-0 w-[108px] h-1 rounded-[90px] bg-[#00c37d]" />
-              <div
-                className={`flex-grow-0 flex-shrink-0 w-[108px] h-1 rounded-[90px] ${
-                  step >= 2 ? "bg-[#00c37d]" : "bg-[#c4c4c4]"
-                } `}
-              />
-              <div
-                className={`flex-grow-0 flex-shrink-0 w-[108px] h-1 rounded-[90px] ${
-                  step == 3 ? "bg-[#00c37d]" : "bg-[#c4c4c4]"
-                } `}
-              />
-            </div>
-          </div>
+          <StepIndicator step={step} />
+
+          {step === 1 && <ChallengeCreateStep1 />}
+          {step === 2 && <ChallengeCreateStep2 />}
+          {step === 3 && <ChallengeCreateStep3 />}
         </div>
-        <div className={`flex items-end justify-end`}>
+        <div className="flex justify-between">
           <button
             type="submit"
             onClick={() => {
-              if (step != 1) setStep(step - 1);
+              if (step !== 1) setStep(step - 1);
             }}
             className={`mt-5 mb-5 w-1/4 py-4 rounded-lg text-[#00C37D] text-center mr-2 
-            ${step === 1 ? "hidden" : ""}
-            border border-[#00C37D] text-sm font-bold`}
+                    ${step === 1 ? "hidden" : ""}
+                    border border-[#00C37D] text-sm font-bold`}
           >
             이전
           </button>
-          {/* <button
+          <button
             type="submit"
-            disabled={selectedCategories.length === 0}
+            // disabled={selectedCategories.length === 0}
             onClick={() => {
               if (step < 3) setStep(step + 1);
             }}
-            className={`mt-5 mb-5 py-4 rounded-lg text-white text-center ${
-              selectedCategories.length === 0 ? "bg-[#E3E3E3]" : "bg-[#00C37D]"
-            } ${step === 1 ? "w-full" : "w-3/4"} text-sm font-bold`}
+            className={`mt-5 mb-5 py-4 rounded-lg text-white text-center bg-[#00C37D]
+          ${step === 1 ? "w-full" : "w-3/4"} text-sm font-bold`}
           >
+            {/* ${selectedCategories.length === 0 ? "bg-[#E3E3E3]" : "bg-[#00C37D]"}  */}
             {step === 3 ? "챌린지 시작하기" : "다음"}
           </button>
-          버튼기능 다시
-          */}
         </div>
       </div>
     </WithHeaderLayout>

@@ -31,6 +31,15 @@ const ChallengeCreatePage = () => {
     );
   };
 
+  const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
+  const handleCategorySelect = (categories: number[]) => {
+    setSelectedCategories(categories);
+    console.log("카테고리 : ", selectedCategories);
+  };
+
+  const [startDate, setStartDate] = useState<Date | any>(null);
+  const [endDate, setEndDate] = useState<Date | any>(null);
+
   return (
     <WithHeaderLayout>
       <div
@@ -54,8 +63,13 @@ const ChallengeCreatePage = () => {
           </div>
           <StepIndicator step={step} />
 
-          {step === 1 && <ChallengeCreateStep1 />}
-          {step === 2 && <ChallengeCreateStep2 />}
+          {step === 1 && (
+            <ChallengeCreateStep1 onCategorySelect={handleCategorySelect} />
+          )}
+          {step === 2 && (
+            <ChallengeCreateStep2 startDate={startDate} endDate={endDate} />
+          )}
+
           {step === 3 && <ChallengeCreateStep3 />}
         </div>
         <div className="flex justify-between">

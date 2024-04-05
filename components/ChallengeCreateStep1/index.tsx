@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 
-const ChallengeStep1 = () => {
-  interface ICategorieyList {
-    categories: ICategoryItem[];
-  }
+interface Props {
+  onCategorySelect: (categories: number[]) => void;
+}
+
+const ChallengeStep1: React.FC<Props> = ({ onCategorySelect }) => {
   interface ICategoryItem {
     categoryCd: number;
     categoryName: string;
     description: string;
   }
 
-  const router = useRouter();
-  const [selectedCategories, setSelectedCategories] = useState<any>([]);
   const accessToken =
     typeof window !== "undefined" && localStorage.getItem("accessToken");
+
+  const [selectedCategories, setSelectedCategories] = useState<any>([]);
   const [categoryList, setCategoryList] = useState<any>([]);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const ChallengeStep1 = () => {
         },
       })
       .then((res) => {
-        const categories = res.data.categories; // "categories" 키에서 배열을 추출
+        const categories = res.data.categories;
         setCategoryList(categories);
       })
       .catch((error) => {
@@ -36,7 +36,6 @@ const ChallengeStep1 = () => {
   }, []);
 
   const handleCategoryClick = (category: number) => {
-    // 클릭한 항목이 이미 선택되었다면 제거, 아니면 추가
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item: number) => item !== category)
@@ -46,6 +45,7 @@ const ChallengeStep1 = () => {
         setSelectedCategories([...selectedCategories, category]);
       }
     }
+    onCategorySelect(selectedCategories);
   };
   return (
     <>

@@ -1,10 +1,18 @@
-import React, { ReactNode, useState, ChangeEvent } from "react";
-
-const ChallengeStep3 = () => {
+import React, { ReactNode, useEffect, useState, ChangeEvent } from "react";
+interface ChallengeStep3Props {
+  onFormDataChange: (data: {
+    challengeTitle: string;
+    challengeDescription: string;
+  }) => void;
+}
+const ChallengeStep3: React.FC<ChallengeStep3Props> = ({
+  onFormDataChange,
+}) => {
   const [formData, setFormData] = useState({
     challengeTitle: "",
     challengeDescription: "",
   });
+
   const { challengeTitle, challengeDescription } = formData;
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -13,6 +21,10 @@ const ChallengeStep3 = () => {
   const handleDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setFormData({ ...formData, challengeDescription: e.target.value });
   };
+
+  useEffect(() => {
+    onFormDataChange(formData);
+  }, [formData, onFormDataChange]);
 
   return (
     <>
@@ -23,9 +35,9 @@ const ChallengeStep3 = () => {
         </p>
       </div>
 
-      <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 w-[328px] gap-1">
+      <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 w-full gap-1">
         <div className="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-1">
-          <p className="flex-grow-0 flex-shrink-0 text-[13px] font-bold text-left text-[#555]">
+          <p className="flex-grow-0 flex-shrink-0 font-small text-[#131313] text-sm">
             기간
           </p>
         </div>
@@ -34,27 +46,9 @@ const ChallengeStep3 = () => {
             <p className="flex-grow-0 flex-shrink-0 text-[13px] font-semibold text-left text-[#555]">
               5일간 |
             </p>
-            <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-1">
-              <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-0.5">
-                <p className="flex-grow-0 flex-shrink-0 text-[11px] text-left text-[#777]">
-                  시작
-                </p>
-                <p className="flex-grow-0 flex-shrink-0 text-sm text-center text-[#777]">
-                  2024.05.01
-                </p>
-              </div>
-              <p className="flex-grow-0 flex-shrink-0 text-base text-center text-[#777]">
-                ~
-              </p>
-              <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-0.5">
-                <p className="flex-grow-0 flex-shrink-0 text-[11px] text-left text-[#777]">
-                  종료
-                </p>
-                <p className="flex-grow-0 flex-shrink-0 text-sm text-center text-[#777]">
-                  2024.05.05
-                </p>
-              </div>
-            </div>
+            <p className="flex-grow-0 flex-shrink-0 text-[11px] text-left text-[#777]">
+              시작 2024.05.01 ~ 종료 2024.05.05
+            </p>
           </div>
         </div>
       </div>
@@ -78,12 +72,6 @@ const ChallengeStep3 = () => {
         className={`
                 p-3 rounded-lg border w-full resize-none text-center text-base text-[#353535] h-[50px]`}
       />
-
-      {/* <p className="mt-1 mb-2 font-medium text-[#eb3434] text-xs h-1">
-                {isError
-                  ? "닉네임은 띄어쓰기 없이 한글, 영문, 숫자만 가능해요."
-                  : ""}
-              </p> */}
       <p className="mt-5 mb-2 font-medium text-[#131313] text-sm">
         다짐 한 마디
       </p>

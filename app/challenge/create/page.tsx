@@ -6,7 +6,8 @@ import ChallengeCreateStep2 from "@/components/ChallengeCreateStep2";
 import ChallengeCreateStep3 from "@/components/ChallengeCreateStep3";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-const ChallengeCreatePage = () => {
+import { differenceInDays } from "date-fns";
+const ChallengeCreatePage: React.FC = () => {
   const [step, setStep] = useState(1);
   const StepIndicator = ({ step }: { step: number }) => {
     const stepClasses = [
@@ -34,12 +35,26 @@ const ChallengeCreatePage = () => {
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
   const handleCategorySelect = (categories: number[]) => {
     setSelectedCategories(categories);
-    console.log("카테고리 : ", selectedCategories);
   };
 
   const [startDate, setStartDate] = useState<Date | any>(null);
   const [endDate, setEndDate] = useState<Date | any>(null);
+  const [daysDiff, setDaysDiff] = useState<Number | any>(0);
+  useEffect(() => {
+    setDaysDiff(differenceInDays(endDate, startDate) + 1);
+  }, [endDate]);
 
+  const [formData, setFormData] = useState({
+    challengeTitle: "",
+    challengeDescription: "",
+  });
+
+  const handleFormDataChange = (data: {
+    challengeTitle: string;
+    challengeDescription: string;
+  }) => {
+    setFormData(data);
+  };
   return (
     <WithHeaderLayout>
       <div
@@ -67,33 +82,53 @@ const ChallengeCreatePage = () => {
             <ChallengeCreateStep1 onCategorySelect={handleCategorySelect} />
           )}
           {step === 2 && (
-            <ChallengeCreateStep2 startDate={startDate} endDate={endDate} />
+            <ChallengeCreateStep2
+              startDate={startDate}
+              endDate={endDate}
+              setStartDate={setStartDate}
+              setEndDate={setEndDate}
+            />
           )}
-
-          {step === 3 && <ChallengeCreateStep3 />}
+          {step === 3 && (
+            <ChallengeCreateStep3 onFormDataChange={handleFormDataChange} />
+          )}
         </div>
         <div className="flex justify-between">
           <button
-            type="submit"
+            type="button"
             onClick={() => {
               if (step !== 1) setStep(step - 1);
             }}
             className={`mt-5 mb-5 w-1/4 py-4 rounded-lg text-[#00C37D] text-center mr-2 
                     ${step === 1 ? "hidden" : ""}
-                    border border-[#00C37D] text-sm font-bold`}
+                    border border-[#00C37D] text-base font-bold`}
           >
             이전
           </button>
           <button
-            type="submit"
-            // disabled={selectedCategories.length === 0}
+            type="button"
+            disabled={
+              selectedCategories.length === 0 || formData.challengeTitle === ""
+            }
             onClick={() => {
               if (step < 3) setStep(step + 1);
             }}
-            className={`mt-5 mb-5 py-4 rounded-lg text-white text-center bg-[#00C37D]
-          ${step === 1 ? "w-full" : "w-3/4"} text-sm font-bold`}
+            className={`mt-5 mb-5 py-4 flex items-center justify-center rounded-lg text-white text-center bg-[#00C37D]
+            ${step === 1 ? "w-full" : "w-3/4"} 
+            ${
+              selectedCategories.length === 0 || formData.challengeTitle === ""
+                ? "bg-[#E3E3E3]"
+                : "bg-[#00C37D]"
+            } 
+            text-base font-bold`}
           >
-            {/* ${selectedCategories.length === 0 ? "bg-[#E3E3E3]" : "bg-[#00C37D]"}  */}
+            <span
+              className={`flex-grow-0 flex-shrink-0 text-xs font-semibold text-left text-white bg-[#00945F] rounded-full p-1 pl-3 pr-3 mr-1 ${
+                step === 2 && endDate !== null ? "" : "hidden"
+              }`}
+            >
+              {daysDiff}일간
+            </span>
             {step === 3 ? "챌린지 시작하기" : "다음"}
           </button>
         </div>

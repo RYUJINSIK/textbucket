@@ -18,10 +18,20 @@ import {
   differenceInDays,
 } from "date-fns";
 
-const ChallengeStep2 = () => {
+interface Props {
+  startDate: Date | any;
+  endDate: Date | any;
+  setStartDate: React.Dispatch<React.SetStateAction<Date | any>>;
+  setEndDate: React.Dispatch<React.SetStateAction<Date | any>>;
+}
+
+const ChallengeStep2: React.FC<Props> = ({
+  startDate,
+  endDate,
+  setStartDate,
+  setEndDate,
+}) => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [startDate, setStartDate] = useState<Date | any>(null);
-  const [endDate, setEndDate] = useState<Date | any>(null);
   const weekDays = ["일", "월", "화", "수", "목", "금", "토"];
   const [isCustomSelecting, setIsCustomSelecting] = useState<boolean>(false);
   const [selectedInterval, setSelectedInterval] = useState<String>("1week");

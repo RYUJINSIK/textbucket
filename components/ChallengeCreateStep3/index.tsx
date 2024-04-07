@@ -58,7 +58,7 @@ const ChallengeStep3: React.FC<ChallengeStep3Props> = ({
           챌린지 이름 <span className="text-[#eb3434]">*</span>
         </p>
         <p className="mt-5 font-small text-[#777777] text-sm">
-          {challengeTitle.length} / 10
+          {challengeTitle.length} / 20
         </p>
       </div>
 
@@ -68,16 +68,19 @@ const ChallengeStep3: React.FC<ChallengeStep3Props> = ({
         value={challengeTitle}
         onChange={handleNameChange}
         placeholder="(필수)챌린지 이름을 입력해 주세요"
-        maxLength={10}
+        maxLength={20}
         className={`
                 p-3 rounded-lg border w-full resize-none text-center text-base text-[#353535] h-[50px]`}
       />
-      <p className="mt-5 mb-2 font-medium text-[#131313] text-sm">
-        다짐 한 마디
-      </p>
+      <div className="flex justify-between items-center">
+        <p className="mt-5 font-small text-[#131313] text-sm">다짐</p>
+        <p className="mt-5 font-small text-[#777777] text-sm">
+          {challengeDescription.length} / 50
+        </p>
+      </div>
       <textarea
         id="challengeDescription"
-        maxLength={100}
+        maxLength={50}
         name="challengeDescription"
         value={challengeDescription}
         onChange={handleDescriptionChange}

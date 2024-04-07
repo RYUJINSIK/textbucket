@@ -32,8 +32,8 @@ const ChallengeCreatePage: React.FC = () => {
     );
   };
 
-  const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
-  const handleCategorySelect = (categories: number[]) => {
+  const [selectedCategories, setSelectedCategories] = useState<any>([]);
+  const handleCategorySelect = (categories: number) => {
     setSelectedCategories(categories);
   };
 
@@ -55,6 +55,7 @@ const ChallengeCreatePage: React.FC = () => {
   }) => {
     setFormData(data);
   };
+
   return (
     <WithHeaderLayout>
       <div
@@ -107,9 +108,6 @@ const ChallengeCreatePage: React.FC = () => {
           </button>
           <button
             type="button"
-            disabled={
-              selectedCategories.length === 0 || formData.challengeTitle === ""
-            }
             onClick={() => {
               if (step < 3) setStep(step + 1);
             }}
@@ -119,7 +117,8 @@ const ChallengeCreatePage: React.FC = () => {
               selectedCategories.length === 0 || formData.challengeTitle === ""
                 ? "bg-[#E3E3E3]"
                 : "bg-[#00C37D]"
-            } 
+            }
+            
             text-base font-bold`}
           >
             <span

@@ -38,6 +38,7 @@ const PilsaDetailPage = () => {
     );
     if (res.status === 200) {
       setPilsaInfo(res.data);
+      console.log(res.data);
       return res.data;
     }
   };

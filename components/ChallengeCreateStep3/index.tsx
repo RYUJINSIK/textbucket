@@ -1,34 +1,38 @@
 import React, { ReactNode, useEffect, useState, ChangeEvent } from "react";
 interface ChallengeStep3Props {
-  onFormDataChange: (data: {
+  formData: {
     challengeTitle: string;
     challengeDescription: string;
-  }) => void;
+  };
+  setFormData: React.Dispatch<
+    React.SetStateAction<{
+      challengeTitle: string;
+      challengeDescription: string;
+    }>
+  >;
 }
 const ChallengeStep3: React.FC<ChallengeStep3Props> = ({
-  onFormDataChange,
+  formData,
+  setFormData,
 }) => {
-  const [formData, setFormData] = useState({
-    challengeTitle: "",
-    challengeDescription: "",
-  });
-
-  const { challengeTitle, challengeDescription } = formData;
-
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, challengeTitle: e.target.value });
-  };
-  const handleDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setFormData({ ...formData, challengeDescription: e.target.value });
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      challengeTitle: e.target.value,
+    });
   };
 
-  useEffect(() => {
-    onFormDataChange(formData);
-  }, [formData, onFormDataChange]);
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setFormData({
+      ...formData,
+      challengeDescription: e.target.value,
+    });
+  };
 
   return (
     <>
-      {/* step 3 */}
       <div className="flex flex-col justify-center items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-1.5 py-2">
         <p className="self-stretch flex-grow-0 flex-shrink-0 w-[328px] text-lg font-bold text-left text-[#353535]">
           챌린지 이름과 다짐은 무엇인가요 ?
@@ -58,15 +62,15 @@ const ChallengeStep3: React.FC<ChallengeStep3Props> = ({
           챌린지 이름 <span className="text-[#eb3434]">*</span>
         </p>
         <p className="mt-5 font-small text-[#777777] text-sm">
-          {challengeTitle.length} / 20
+          {formData.challengeTitle.length} / 20
         </p>
       </div>
 
       <input
         type="text"
         name="challengeTitle"
-        value={challengeTitle}
-        onChange={handleNameChange}
+        value={formData.challengeTitle}
+        onChange={handleTitleChange}
         placeholder="(필수)챌린지 이름을 입력해 주세요"
         maxLength={20}
         className={`
@@ -75,14 +79,14 @@ const ChallengeStep3: React.FC<ChallengeStep3Props> = ({
       <div className="flex justify-between items-center">
         <p className="mt-5 font-small text-[#131313] text-sm">다짐</p>
         <p className="mt-5 font-small text-[#777777] text-sm">
-          {challengeDescription.length} / 50
+          {formData.challengeDescription.length} / 50
         </p>
       </div>
       <textarea
         id="challengeDescription"
         maxLength={50}
         name="challengeDescription"
-        value={challengeDescription}
+        value={formData.challengeDescription}
         onChange={handleDescriptionChange}
         placeholder="다짐 한 마디를 써 보세요:)
                 텍스트버킷은 당신의 필사 챌린지를 응원합니다!"

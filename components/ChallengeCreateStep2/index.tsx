@@ -23,6 +23,8 @@ interface Props {
   endDate: Date | any;
   setStartDate: React.Dispatch<React.SetStateAction<Date | any>>;
   setEndDate: React.Dispatch<React.SetStateAction<Date | any>>;
+  selectedInterval: String;
+  setSelectedInterval: React.Dispatch<React.SetStateAction<String>>;
 }
 
 const ChallengeStep2: React.FC<Props> = ({
@@ -30,11 +32,12 @@ const ChallengeStep2: React.FC<Props> = ({
   endDate,
   setStartDate,
   setEndDate,
+  selectedInterval,
+  setSelectedInterval,
 }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const weekDays = ["일", "월", "화", "수", "목", "금", "토"];
   const [isCustomSelecting, setIsCustomSelecting] = useState<boolean>(false);
-  const [selectedInterval, setSelectedInterval] = useState<String>("1week");
   const dueDate = [
     { label: "1주", interval: "1week" },
     { label: "2주", interval: "2week" },
@@ -43,11 +46,14 @@ const ChallengeStep2: React.FC<Props> = ({
   ];
 
   useEffect(() => {
-    const weekLater = addWeeks(new Date(), 1);
-    setStartDate(new Date());
-    setEndDate(weekLater);
-    setIsCustomSelecting(false);
-  }, []);
+    if (!startDate && !endDate && !isCustomSelecting) {
+      const weekLater = addWeeks(new Date(), 1);
+      setStartDate(new Date());
+      setEndDate(weekLater);
+      setIsCustomSelecting(false);
+      setSelectedInterval("1week");
+    }
+  }, [startDate, endDate, isCustomSelecting]);
 
   const goToPreviousMonth = () => {
     setCurrentDate(subMonths(currentDate, 1));
@@ -85,7 +91,7 @@ const ChallengeStep2: React.FC<Props> = ({
     );
   };
 
-  const handleIntervalClick = (interval: String) => {
+  const handleIntervalClick = (interval: string) => {
     setSelectedInterval(interval);
     // 나머지 버튼의 선택 상태를 해제
     dueDate.forEach((d) => {
@@ -199,7 +205,6 @@ const ChallengeStep2: React.FC<Props> = ({
 
   return (
     <>
-      {/* step 2 */}
       <div className="flex flex-col justify-center items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-1.5 py-2">
         <p className="self-stretch flex-grow-0 flex-shrink-0 w-[328px] text-lg font-bold text-left text-[#353535]">
           얼마동안 챌린지 할까요 ?
@@ -229,7 +234,6 @@ const ChallengeStep2: React.FC<Props> = ({
           ))}
       </div>
       <div className="w-full">{renderCalendar()}</div>
-      {/* step 2 */}
     </>
   );
 };

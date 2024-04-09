@@ -40,6 +40,7 @@ const ChallengeCreatePage: React.FC = () => {
   const [startDate, setStartDate] = useState<Date | any>(null);
   const [endDate, setEndDate] = useState<Date | any>(null);
   const [daysDiff, setDaysDiff] = useState<Number | any>(0);
+  const [selectedInterval, setSelectedInterval] = useState<String>("");
   useEffect(() => {
     setDaysDiff(differenceInDays(endDate, startDate) + 1);
   }, [endDate]);
@@ -56,6 +57,39 @@ const ChallengeCreatePage: React.FC = () => {
     setFormData(data);
   };
 
+  useEffect(() => {
+    console.log(formData); // Step3에서 변경된 데이터를 확인
+  }, [formData]);
+
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  useEffect(() => {
+    if (selectedCategories.length === 0) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+
+    console.log(selectedCategories);
+  }, [selectedCategories]);
+
+  useEffect(() => {
+    console.log(selectedCategories);
+    console.log(startDate, endDate, daysDiff);
+    console.log(formData);
+  }, [step]);
+
+  const handlePrevButtonClick = () => {
+    console.log(selectedCategories);
+    if (step !== 1) {
+      setStep(step - 1);
+    }
+  };
+  const handleNextButtonClick = () => {
+    if (step < 3) {
+      setStep(step + 1);
+    }
+  };
   return (
     <WithHeaderLayout>
       <div
@@ -80,7 +114,11 @@ const ChallengeCreatePage: React.FC = () => {
           <StepIndicator step={step} />
 
           {step === 1 && (
-            <ChallengeCreateStep1 onCategorySelect={handleCategorySelect} />
+            <ChallengeCreateStep1
+              onCategorySelect={handleCategorySelect}
+              selectedCategories={selectedCategories}
+              setSelectedCategories={setSelectedCategories}
+            />
           )}
           {step === 2 && (
             <ChallengeCreateStep2
@@ -88,18 +126,21 @@ const ChallengeCreatePage: React.FC = () => {
               endDate={endDate}
               setStartDate={setStartDate}
               setEndDate={setEndDate}
+              selectedInterval={selectedInterval}
+              setSelectedInterval={setSelectedInterval}
             />
           )}
           {step === 3 && (
-            <ChallengeCreateStep3 onFormDataChange={handleFormDataChange} />
+            <ChallengeCreateStep3
+              formData={formData}
+              setFormData={setFormData}
+            />
           )}
         </div>
         <div className="flex justify-between">
           <button
             type="button"
-            onClick={() => {
-              if (step !== 1) setStep(step - 1);
-            }}
+            onClick={handlePrevButtonClick}
             className={`mt-5 mb-5 w-1/4 py-4 rounded-lg text-[#00C37D] text-center mr-2 
                     ${step === 1 ? "hidden" : ""}
                     border border-[#00C37D] text-base font-bold`}
@@ -108,19 +149,18 @@ const ChallengeCreatePage: React.FC = () => {
           </button>
           <button
             type="button"
-            onClick={() => {
-              if (step < 3) setStep(step + 1);
-            }}
+            onClick={handleNextButtonClick}
             className={`mt-5 mb-5 py-4 flex items-center justify-center rounded-lg text-white text-center bg-[#00C37D]
             ${step === 1 ? "w-full" : "w-3/4"} 
-            ${
-              selectedCategories.length === 0 || formData.challengeTitle === ""
-                ? "bg-[#E3E3E3]"
-                : "bg-[#00C37D]"
-            }
+            
             
             text-base font-bold`}
           >
+            {/* ${
+              selectedCategories.length === 0 || formData.challengeTitle === ""
+                ? "bg-[#E3E3E3]"
+                : "bg-[#00C37D]"
+            } */}
             <span
               className={`flex-grow-0 flex-shrink-0 text-xs font-semibold text-left text-white bg-[#00945F] rounded-full p-1 pl-3 pr-3 mr-1 ${
                 step === 2 && endDate !== null ? "" : "hidden"

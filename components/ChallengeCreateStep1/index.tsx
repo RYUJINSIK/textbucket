@@ -2,10 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 interface Props {
-  onCategorySelect: (categories: number[]) => void;
+  onCategorySelect: (categories: number) => void;
+  selectedCategories: any;
+  setSelectedCategories: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const ChallengeStep1: React.FC<Props> = ({ onCategorySelect }) => {
+const ChallengeStep1: React.FC<Props> = ({
+  onCategorySelect,
+  selectedCategories,
+  setSelectedCategories,
+}) => {
   interface ICategoryItem {
     categoryCd: number;
     categoryName: string;
@@ -15,7 +21,7 @@ const ChallengeStep1: React.FC<Props> = ({ onCategorySelect }) => {
   const accessToken =
     typeof window !== "undefined" && localStorage.getItem("accessToken");
 
-  const [selectedCategories, setSelectedCategories] = useState<any>([]);
+  // const [selectedCategories, setSelectedCategories] = useState<any>([]);
   const [categoryList, setCategoryList] = useState<any>([]);
 
   useEffect(() => {
@@ -45,8 +51,13 @@ const ChallengeStep1: React.FC<Props> = ({ onCategorySelect }) => {
         setSelectedCategories([...selectedCategories, category]);
       }
     }
-    onCategorySelect(selectedCategories);
   };
+
+  // 선택된 카테고리 변경 시 상위 컴포넌트에 전달
+  useEffect(() => {
+    onCategorySelect(selectedCategories);
+  }, [selectedCategories, onCategorySelect]);
+
   return (
     <>
       <div className="flex flex-col justify-center items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-1.5 py-2">

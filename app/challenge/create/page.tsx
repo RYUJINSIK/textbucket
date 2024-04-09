@@ -5,9 +5,13 @@ import ChallengeCreateStep1 from "@/components/ChallengeCreateStep1";
 import ChallengeCreateStep2 from "@/components/ChallengeCreateStep2";
 import ChallengeCreateStep3 from "@/components/ChallengeCreateStep3";
 import Image from "next/image";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { differenceInDays } from "date-fns";
 const ChallengeCreatePage: React.FC = () => {
+  const accessToken =
+    typeof window !== "undefined" && localStorage.getItem("accessToken");
+
   const [step, setStep] = useState(1);
   const StepIndicator = ({ step }: { step: number }) => {
     const stepClasses = [
@@ -50,13 +54,6 @@ const ChallengeCreatePage: React.FC = () => {
     challengeDescription: "",
   });
 
-  const handleFormDataChange = (data: {
-    challengeTitle: string;
-    challengeDescription: string;
-  }) => {
-    setFormData(data);
-  };
-
   useEffect(() => {
     console.log(formData); // Step3에서 변경된 데이터를 확인
   }, [formData]);
@@ -69,15 +66,7 @@ const ChallengeCreatePage: React.FC = () => {
     } else {
       setIsDisabled(true);
     }
-
-    console.log(selectedCategories);
   }, [selectedCategories]);
-
-  useEffect(() => {
-    console.log(selectedCategories);
-    console.log(startDate, endDate, daysDiff);
-    console.log(formData);
-  }, [step]);
 
   const handlePrevButtonClick = () => {
     console.log(selectedCategories);
@@ -89,7 +78,45 @@ const ChallengeCreatePage: React.FC = () => {
     if (step < 3) {
       setStep(step + 1);
     }
+
+    if (step === 3) {
+      // api 연결
+    }
   };
+
+  const formatDateToString = (date: Date | null): string => {
+    if (!date) return "";
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+
+  const handleSubmit = async () => {
+    const requestBody = {
+      startDate: formatDateToString(startDate),
+      endDate: formatDateToString(endDate),
+      title: formData.challengeTitle,
+      description: formData.challengeDescription,
+    };
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/challenge`,
+        requestBody,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      // router.push("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <WithHeaderLayout>
       <div
@@ -149,18 +176,22 @@ const ChallengeCreatePage: React.FC = () => {
           </button>
           <button
             type="button"
+            disabled={
+              (step === 1 && selectedCategories.length === 0) ||
+              (step === 3 && formData.challengeTitle.trim() === "")
+            }
             onClick={handleNextButtonClick}
             className={`mt-5 mb-5 py-4 flex items-center justify-center rounded-lg text-white text-center bg-[#00C37D]
             ${step === 1 ? "w-full" : "w-3/4"} 
-            
+            ${
+              (step === 1 && selectedCategories.length === 0) ||
+              (step === 3 && formData.challengeTitle.trim() === "")
+                ? "bg-[#E3E3E3]"
+                : "bg-[#00C37D]"
+            }
             
             text-base font-bold`}
           >
-            {/* ${
-              selectedCategories.length === 0 || formData.challengeTitle === ""
-                ? "bg-[#E3E3E3]"
-                : "bg-[#00C37D]"
-            } */}
             <span
               className={`flex-grow-0 flex-shrink-0 text-xs font-semibold text-left text-white bg-[#00945F] rounded-full p-1 pl-3 pr-3 mr-1 ${
                 step === 2 && endDate !== null ? "" : "hidden"

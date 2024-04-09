@@ -20,8 +20,6 @@ const ChallengeStep1: React.FC<Props> = ({
 
   const accessToken =
     typeof window !== "undefined" && localStorage.getItem("accessToken");
-
-  // const [selectedCategories, setSelectedCategories] = useState<any>([]);
   const [categoryList, setCategoryList] = useState<any>([]);
 
   useEffect(() => {

@@ -10,10 +10,16 @@ interface ChallengeStep3Props {
       challengeDescription: string;
     }>
   >;
+  daysDiff: string;
+  startDate: string;
+  endDate: string;
 }
 const ChallengeStep3: React.FC<ChallengeStep3Props> = ({
   formData,
   setFormData,
+  daysDiff,
+  startDate,
+  endDate,
 }) => {
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -48,10 +54,10 @@ const ChallengeStep3: React.FC<ChallengeStep3Props> = ({
         <div className="flex justify-center items-center self-stretch flex-grow-0 flex-shrink-0 gap-1">
           <div className="flex justify-center items-center self-stretch flex-grow relative gap-2 px-3 py-4 rounded-lg bg-[#fbfbfb]">
             <p className="flex-grow-0 flex-shrink-0 text-[13px] font-semibold text-left text-[#555]">
-              5일간 |
+              {daysDiff} 일간 |
             </p>
             <p className="flex-grow-0 flex-shrink-0 text-[11px] text-left text-[#777]">
-              시작 2024.05.01 ~ 종료 2024.05.05
+              시작 {startDate} ~ 종료 {endDate}
             </p>
           </div>
         </div>

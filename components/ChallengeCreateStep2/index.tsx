@@ -13,7 +13,8 @@ import {
   endOfWeek,
   eachDayOfInterval,
   isSameMonth,
-  isWithinInterval,
+  isBefore,
+  isToday,
   isSameDay,
   differenceInDays,
 } from "date-fns";
@@ -25,6 +26,7 @@ interface Props {
   setEndDate: React.Dispatch<React.SetStateAction<Date | any>>;
   selectedInterval: String;
   setSelectedInterval: React.Dispatch<React.SetStateAction<String>>;
+  setShowInfoModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ChallengeStep2: React.FC<Props> = ({
@@ -34,6 +36,7 @@ const ChallengeStep2: React.FC<Props> = ({
   setEndDate,
   selectedInterval,
   setSelectedInterval,
+  setShowInfoModal,
 }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const weekDays = ["일", "월", "화", "수", "목", "금", "토"];
@@ -65,6 +68,10 @@ const ChallengeStep2: React.FC<Props> = ({
 
   const handleDateClick = (date: Date) => {
     if (isCustomSelecting) {
+      if (isBefore(date, new Date()) && !isToday(date)) {
+        setShowInfoModal(true);
+        return;
+      }
       if (!startDate) {
         setStartDate(date);
         setEndDate(null);

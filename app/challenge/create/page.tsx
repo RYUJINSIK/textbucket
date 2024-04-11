@@ -4,11 +4,13 @@ import WithHeaderLayout from "@/components/WithHeaderLayout";
 import ChallengeCreateStep1 from "@/components/ChallengeCreateStep1";
 import ChallengeCreateStep2 from "@/components/ChallengeCreateStep2";
 import ChallengeCreateStep3 from "@/components/ChallengeCreateStep3";
+import Modal from "@/components/Modal";
 import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { differenceInDays } from "date-fns";
 const ChallengeCreatePage: React.FC = () => {
+  const router = useRouter();
   const accessToken =
     typeof window !== "undefined" && localStorage.getItem("accessToken");
 
@@ -53,20 +55,6 @@ const ChallengeCreatePage: React.FC = () => {
     challengeTitle: "",
     challengeDescription: "",
   });
-
-  useEffect(() => {
-    console.log(formData); // Step3에서 변경된 데이터를 확인
-  }, [formData]);
-
-  const [isDisabled, setIsDisabled] = useState(false);
-
-  useEffect(() => {
-    if (selectedCategories.length === 0) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
-  }, [selectedCategories]);
 
   const handlePrevButtonClick = () => {
     console.log(selectedCategories);
@@ -117,6 +105,15 @@ const ChallengeCreatePage: React.FC = () => {
     }
   };
 
+  const [showBackModal, setShowBackModal] = useState(false);
+  const closeBackModal = () => setShowBackModal(false);
+  const handleBackButtonClick = () => {
+    router.push("/challenge");
+  };
+
+  const [showInfoModal, setShowInfoModal] = useState(false);
+  const closeInfoModal = () => setShowInfoModal(false);
+
   return (
     <WithHeaderLayout>
       <div
@@ -132,6 +129,7 @@ const ChallengeCreatePage: React.FC = () => {
                 alt="back"
                 src="/icons/ibtn_back.png"
                 className="flex-grow-0 flex-shrink-0 w-6 h-6 relative cursor-pointer"
+                onClick={() => setShowBackModal(true)}
               />
               <p className="flex-grow-0 flex-shrink-0 text-base font-semibold text-left text-black">
                 챌린지 만들기
@@ -155,12 +153,16 @@ const ChallengeCreatePage: React.FC = () => {
               setEndDate={setEndDate}
               selectedInterval={selectedInterval}
               setSelectedInterval={setSelectedInterval}
+              setShowInfoModal={setShowInfoModal}
             />
           )}
           {step === 3 && (
             <ChallengeCreateStep3
               formData={formData}
               setFormData={setFormData}
+              daysDiff={daysDiff}
+              startDate={formatDateToString(startDate)}
+              endDate={formatDateToString(endDate)}
             />
           )}
         </div>
@@ -203,6 +205,25 @@ const ChallengeCreatePage: React.FC = () => {
           </button>
         </div>
       </div>
+      {showBackModal && (
+        <Modal
+          open={showBackModal}
+          onClose={closeBackModal}
+          title="챌린지 만들기를 그만두시겠어요?"
+          content="저장되지 않아요."
+          confirmButton="그만두기"
+          closeButton="취소"
+          confirmEvent={handleBackButtonClick}
+        />
+      )}
+      {showInfoModal && (
+        <Modal
+          open={showInfoModal}
+          onClose={closeInfoModal}
+          title="오늘 이후 날짜를 선택해 주세요"
+          closeButton="확인"
+        />
+      )}
     </WithHeaderLayout>
   );
 };

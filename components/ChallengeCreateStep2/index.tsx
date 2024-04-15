@@ -84,7 +84,6 @@ const ChallengeStep2: React.FC<Props> = ({
 
       if (startDate && endDate) {
         const daysDiff = differenceInDays(endDate, startDate) + 1;
-        console.log("Selected days: ", daysDiff);
       }
     }
   };

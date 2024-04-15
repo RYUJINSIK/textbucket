@@ -59,7 +59,6 @@ const ProfileEditPage = () => {
 
   const handleImageChange = (event: { target: { files?: any } }) => {
     setFormData({ ...formData, file: event.target.files[0] });
-    console.log("???? : ", event.target.files[0]);
     setPreviewURL(URL.createObjectURL(event.target.files[0]));
     closeModal();
   };

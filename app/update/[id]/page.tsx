@@ -117,7 +117,6 @@ const UpdatePage = () => {
   const getImageUrl = async () => {
     const imageData = new FormData();
     imageData.append("files", formData.file);
-    console.log(formData.file);
     if (formData.file) {
       // 기존 이미지 외 새로운 이미지로 수정 했을 시
       try {

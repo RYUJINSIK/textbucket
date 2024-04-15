@@ -51,7 +51,7 @@ const MyPilsaDetailPage = () => {
         },
       }
     );
-    if (res.status === 204) {
+    if (res.status === 200) {
       setIsOpen(false);
       router.back();
     }

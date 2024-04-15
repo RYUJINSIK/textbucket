@@ -57,7 +57,6 @@ const ChallengeCreatePage: React.FC = () => {
   });
 
   const handlePrevButtonClick = () => {
-    console.log(selectedCategories);
     if (step !== 1) {
       setStep(step - 1);
     }

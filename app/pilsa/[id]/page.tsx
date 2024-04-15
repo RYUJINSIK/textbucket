@@ -9,8 +9,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-// import KakaoShareButton from "@/components/KakaoShare";
+import KakaoShareButton from "@/components/KakaoShare";
 import LikeButton from "@/components/LikeButton";
+import LikeNShare from "@/components/LikeNShare";
 
 const PilsaDetailPage = () => {
   const params = useParams();
@@ -38,17 +39,22 @@ const PilsaDetailPage = () => {
     );
     if (res.status === 200) {
       setPilsaInfo(res.data);
-      console.log(res.data);
       return res.data;
     }
   };
 
   const deletePilsaItem = async () => {
-    const res = await axios.delete(`/api/v1/pilsa/${pilsaId}`, {
-      data: {
-        memberId: profile?.id as number,
-      },
-    });
+    const res = await axios.delete(
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa/${pilsaId}`,
+      {
+        data: {
+          memberId: profile?.id as number,
+        },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
     if (res.status === 200) {
       router.back();
     }
@@ -138,14 +144,12 @@ const PilsaDetailPage = () => {
                 <p className="text-lg text-[#353535] font-bold font-Bokk-MeongJo relative z-10">
                   {pilsaInfo.title}
                 </p>
-                <div className="flex justify-end z-10">
-                  <LikeButton
-                    liked={pilsaInfo.isLikedAble}
-                    pilsaId={pilsaId as string}
+                <div className="flex justify-end z-50">
+                  {/* <LikeButton
+                    
                   />
-                  {/* <KakaoShareButton
-                    title={pilsaInfo.title}
-                    description={pilsaInfo.textContents}
+                  <KakaoShareButton
+                    
                   /> */}
                   {isMine ? (
                     <div
@@ -247,6 +251,12 @@ const PilsaDetailPage = () => {
               </Link>
             )}
           </footer>
+          <LikeNShare
+            title={pilsaInfo.title}
+            description={pilsaInfo.textContents}
+            liked={pilsaInfo.isLikedAble}
+            pilsaId={pilsaId as string}
+          />
           <Modal
             open={isOpen}
             onClose={() => setIsOpen(false)}

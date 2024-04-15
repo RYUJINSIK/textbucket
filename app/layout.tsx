@@ -12,11 +12,11 @@ export const metadata: Metadata = {
   },
 };
 
-// declare global {
-//   interface Window {
-//     Kakao: any;
-//   }
-// }
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 export default function RootLayout({
   children,
@@ -29,10 +29,10 @@ export default function RootLayout({
         <AuthProvider>
           <div id="global-modal">{children}</div>
         </AuthProvider>
-        {/* <Script
+        <Script
           src="https://developers.kakao.com/sdk/js/kakao.js"
           strategy="afterInteractive"
-        /> */}
+        />
       </body>
     </html>
   );

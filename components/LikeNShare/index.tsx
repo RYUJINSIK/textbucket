@@ -72,21 +72,34 @@ const LikeNShare = ({
   };
 
   return (
-    <div className="bg-white border-t border-[EFEFEF] py-3 px-5 w-full flex items-start justify-between ">
+    <div className="bg-white border-t border-[EFEFEF] py-3 px-5 w-full flex items-start justify-between sticky bottom-0 left-0">
       <Image
         onClick={handleShare}
         src="/icons/share.png"
         width={20}
         height={20}
-        alt="share"
+        alt="kakaotalkshare"
+        className="cursor-pointer"
       />
-      <Image
-        onClick={handleLike}
-        src="/icons/bookmark.png"
-        width={20}
-        height={20}
-        alt="bookmark"
-      />
+      {isLiked ? (
+        <Image
+          onClick={handleLike}
+          src="/icons/bookmark_added.png"
+          width={20}
+          height={20}
+          alt="bookmark"
+          className="cursor-pointer"
+        />
+      ) : (
+        <Image
+          onClick={handleLike}
+          src="/icons/bookmark.png"
+          width={20}
+          height={20}
+          alt="bookmark"
+          className="cursor-pointer"
+        />
+      )}
     </div>
   );
 };

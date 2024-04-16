@@ -3,6 +3,7 @@
 import Modal from "@/components/Modal";
 import { IPilsaCardItem } from "@/components/PilsaCard";
 import WithHeaderLayout from "@/components/WithHeaderLayout";
+import LikeNShare from "@/components/LikeNShare";
 import { useAuth } from "@/shared/contexts/AuthContext";
 import axios from "axios";
 import Image from "next/image";
@@ -199,7 +200,7 @@ const MyPilsaDetailPage = () => {
               <p>{pilsaInfo.author}</p>|<p>{pilsaInfo.publisher}</p>
             </div>
           </main>
-          <footer className="bg-white border-t border-[EFEFEF] py-3 px-5 w-full flex items-start justify-between sticky bottom-0 left-0">
+          <footer className="bg-white border-t border-[EFEFEF] py-3 px-5 w-full flex items-start justify-between sticky bottom-11 left-0">
             {pilsaInfo.isPreviousPilsa && (
               <Link
                 className="flex items-center gap-x-1"
@@ -239,6 +240,12 @@ const MyPilsaDetailPage = () => {
               </Link>
             )}
           </footer>
+          <LikeNShare
+            title={pilsaInfo.title}
+            description={pilsaInfo.textContents}
+            liked={pilsaInfo.isLikedAble}
+            pilsaId={pilsaId as string}
+          />
           <Modal
             open={isOpen}
             onClose={() => setIsOpen(false)}

@@ -9,8 +9,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import KakaoShareButton from "@/components/KakaoShare";
-import LikeButton from "@/components/LikeButton";
 import LikeNShare from "@/components/LikeNShare";
 
 const PilsaDetailPage = () => {
@@ -39,6 +37,7 @@ const PilsaDetailPage = () => {
     );
     if (res.status === 200) {
       setPilsaInfo(res.data);
+      console.log("filsaInfo ? : ", res.data);
       return res.data;
     }
   };
@@ -91,7 +90,7 @@ const PilsaDetailPage = () => {
       {pilsaInfo && (
         <>
           <main
-            className="pt-6 flex flex-col gap-y-5 pb-12 px-4 h-full relative"
+            className="pt-6 flex flex-col gap-y-5 px-4 h-full"
             style={{
               minHeight: "calc(100vh - 101px)",
             }}
@@ -145,12 +144,6 @@ const PilsaDetailPage = () => {
                   {pilsaInfo.title}
                 </p>
                 <div className="flex justify-end z-50">
-                  {/* <LikeButton
-                    
-                  />
-                  <KakaoShareButton
-                    
-                  /> */}
                   {isMine ? (
                     <div
                       className="relative cursor-pointer"
@@ -211,7 +204,7 @@ const PilsaDetailPage = () => {
               <p>{pilsaInfo.author}</p>|<p>{pilsaInfo.publisher}</p>
             </div>
           </main>
-          <footer className="bg-white border-t border-[EFEFEF] py-3 px-5 w-full flex items-start justify-between sticky bottom-0 left-0">
+          <footer className="bg-white border-t border-[EFEFEF] py-3 px-5 w-full flex items-start justify-between sticky bottom-11 left-0">
             {pilsaInfo.isPreviousPilsa && (
               <Link
                 className="flex items-center gap-x-1"

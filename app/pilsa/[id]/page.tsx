@@ -204,7 +204,9 @@ const PilsaDetailPage = () => {
               <p>{pilsaInfo.author}</p>|<p>{pilsaInfo.publisher}</p>
             </div>
           </main>
-          <footer className="bg-white border-t border-[EFEFEF] py-3 px-5 w-full flex items-start justify-between sticky bottom-11 left-0">
+
+          <footer className="bg-white border-t border-[EFEFEF] py-3 px-5 w-full flex items-start justify-between bottom-11 sticky left-0 z-10">
+            {" "}
             {pilsaInfo.isPreviousPilsa && (
               <Link
                 className="flex items-center gap-x-1"
@@ -219,9 +221,15 @@ const PilsaDetailPage = () => {
                   />
                   <span className="text-sm text-[#999]">이전</span>
                 </div>
-                <p className="text-[#777] text-sm">
-                  {pilsaInfo.previousPilsa.title}
-                </p>
+                {pilsaInfo.previousPilsa.title.length > 10 ? (
+                  <p className="text-[#777] text-sm">
+                    {pilsaInfo.previousPilsa.title.substring(0, 10) + " ... "}
+                  </p>
+                ) : (
+                  <p className="text-[#777] text-sm">
+                    {pilsaInfo.previousPilsa.title}
+                  </p>
+                )}
               </Link>
             )}
             {pilsaInfo.isNextPilsa && (
@@ -230,9 +238,15 @@ const PilsaDetailPage = () => {
                 href={`/pilsa/${pilsaInfo.nextPilsa.pilsaId}`}
               >
                 <div className="flex items-center gap-x-1">
-                  <p className="text-[#777] text-sm">
-                    {pilsaInfo.nextPilsa.title}
-                  </p>
+                  {pilsaInfo.nextPilsa.title.length > 10 ? (
+                    <p className="text-[#777] text-sm">
+                      {pilsaInfo.nextPilsa.title.substring(0, 10) + " ... "}
+                    </p>
+                  ) : (
+                    <p className="text-[#777] text-sm">
+                      {pilsaInfo.nextPilsa.title}
+                    </p>
+                  )}
                   <span className="text-sm text-[#999]">다음</span>
                   <Image
                     src="/icons/arrow_right_icon.svg"

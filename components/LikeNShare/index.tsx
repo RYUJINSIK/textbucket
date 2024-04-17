@@ -72,7 +72,7 @@ const LikeNShare = ({
   };
 
   return (
-    <div className="bg-white border-t border-[EFEFEF] py-3 px-5 w-full flex items-start justify-between sticky bottom-0 left-0">
+    <div className="absolute bottom-0 left-0 z-10 w-full bg-white border-t border-[EFEFEF] py-3 px-5 flex items-start justify-between">
       <Image
         onClick={handleShare}
         src="/icons/share.png"

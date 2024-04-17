@@ -200,45 +200,47 @@ const MyPilsaDetailPage = () => {
               <p>{pilsaInfo.author}</p>|<p>{pilsaInfo.publisher}</p>
             </div>
           </main>
-          <footer className="bg-white border-t border-[EFEFEF] py-3 px-5 w-full flex items-start justify-between sticky bottom-11 left-0">
-            {pilsaInfo.isPreviousPilsa && (
-              <Link
-                className="flex items-center gap-x-1"
-                href={`/pilsa/${pilsaInfo.previousPilsa.pilsaId}`}
-              >
-                <div className="flex items-center gap-x-1">
-                  <Image
-                    src="/icons/arrow_left_icon.svg"
-                    alt="left"
-                    width={16}
-                    height={16}
-                  />
-                  <span className="text-sm text-[#999]">이전</span>
-                </div>
-                <p className="text-[#777] text-sm">
-                  {pilsaInfo.previousPilsa.title}
-                </p>
-              </Link>
-            )}
-            {pilsaInfo.isNextPilsa && (
-              <Link
-                className="flex items-center gap-x-1 self-end ml-auto"
-                href={`/pilsa/${pilsaInfo.nextPilsa.pilsaId}`}
-              >
-                <div className="flex items-center gap-x-1">
+          <footer className="bg-white border-t border-[EFEFEF] py-3 px-5 w-full flex items-start justify-between bottom-11 sticky left-0 z-10">
+            <div>
+              {pilsaInfo.isPreviousPilsa && (
+                <Link
+                  className="flex items-center gap-x-1"
+                  href={`/pilsa/${pilsaInfo.previousPilsa.pilsaId}`}
+                >
+                  <div className="flex items-center gap-x-1">
+                    <Image
+                      src="/icons/arrow_left_icon.svg"
+                      alt="left"
+                      width={16}
+                      height={16}
+                    />
+                    <span className="text-sm text-[#999]">이전</span>
+                  </div>
                   <p className="text-[#777] text-sm">
-                    {pilsaInfo.nextPilsa.title}
+                    {pilsaInfo.previousPilsa.title}
                   </p>
-                  <span className="text-sm text-[#999]">다음</span>
-                  <Image
-                    src="/icons/arrow_right_icon.svg"
-                    alt="left"
-                    width={16}
-                    height={16}
-                  />
-                </div>
-              </Link>
-            )}
+                </Link>
+              )}
+              {pilsaInfo.isNextPilsa && (
+                <Link
+                  className="flex items-center gap-x-1 self-end ml-auto"
+                  href={`/pilsa/${pilsaInfo.nextPilsa.pilsaId}`}
+                >
+                  <div className="flex items-center gap-x-1">
+                    <p className="text-[#777] text-sm">
+                      {pilsaInfo.nextPilsa.title}
+                    </p>
+                    <span className="text-sm text-[#999]">다음</span>
+                    <Image
+                      src="/icons/arrow_right_icon.svg"
+                      alt="left"
+                      width={16}
+                      height={16}
+                    />
+                  </div>
+                </Link>
+              )}
+            </div>
           </footer>
           <LikeNShare
             title={pilsaInfo.title}

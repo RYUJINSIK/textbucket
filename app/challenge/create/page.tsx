@@ -13,6 +13,29 @@ const ChallengeCreatePage: React.FC = () => {
   const router = useRouter();
   const accessToken =
     typeof window !== "undefined" && localStorage.getItem("accessToken");
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [status, setStatus] = useState(["ING"]);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const closeErrorModal = () => setShowErrorModal(false);
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/challenge/list?page=${page}&size=${pageSize}&status=${status}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data.totalCount >= 1) setShowErrorModal(true);
+      })
+      .catch((error) => {
+        console.log("!", error);
+      });
+  }, []);
 
   const [step, setStep] = useState(1);
   const StepIndicator = ({ step }: { step: number }) => {
@@ -67,7 +90,7 @@ const ChallengeCreatePage: React.FC = () => {
     }
 
     if (step === 3) {
-      // api 연결
+      handleSubmit();
     }
   };
 
@@ -86,9 +109,10 @@ const ChallengeCreatePage: React.FC = () => {
       endDate: formatDateToString(endDate),
       title: formData.challengeTitle,
       description: formData.challengeDescription,
+      categories: selectedCategories,
     };
     try {
-      const response = await axios.post(
+      await axios.post(
         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/challenge`,
         requestBody,
         {
@@ -98,7 +122,7 @@ const ChallengeCreatePage: React.FC = () => {
           },
         }
       );
-      // router.push("/");
+      router.push("/challenge");
     } catch (error) {
       console.error(error);
     }
@@ -221,6 +245,15 @@ const ChallengeCreatePage: React.FC = () => {
           onClose={closeInfoModal}
           title="오늘 이후 날짜를 선택해 주세요"
           closeButton="확인"
+        />
+      )}
+      {showErrorModal && (
+        <Modal
+          open={showErrorModal}
+          onClose={closeErrorModal}
+          title="이미 진행중인 챌린지가 존재합니다!"
+          confirmButton="확인"
+          confirmEvent={handleBackButtonClick}
         />
       )}
     </WithHeaderLayout>

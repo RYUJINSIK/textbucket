@@ -35,7 +35,9 @@ const Modal = ({
         </div>
         <div
           className={`${
-            confirmButton ? "grid-cols-2" : "grid-cols-1"
+            confirmButton !== undefined && closeButton !== undefined
+              ? "grid-cols-2"
+              : "grid-cols-1"
           } grid py-4`}
         >
           {closeButton && (

@@ -6,13 +6,14 @@ import WithHeaderLayout from "@/components/WithHeaderLayout";
 const ChallengePage = () => {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
+  const [status, setStatus] = useState(["ING"]);
   const accessToken =
     typeof window !== "undefined" && localStorage.getItem("accessToken");
 
   useEffect(() => {
     axios
       .get(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/challenge/list?page=${page}&size=${pageSize}`,
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/challenge/list?page=${page}&size=${pageSize}&status=${status}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -21,7 +22,7 @@ const ChallengePage = () => {
         }
       )
       .then((res) => {
-        console.log(res.data);
+        console.log("??", res.data);
       })
       .catch((error) => {
         console.log("!", error);

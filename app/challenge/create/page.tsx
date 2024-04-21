@@ -17,7 +17,6 @@ const ChallengeCreatePage: React.FC = () => {
   const [pageSize, setPageSize] = useState(10);
   const [status, setStatus] = useState(["ING"]);
   const [showErrorModal, setShowErrorModal] = useState(false);
-  const closeErrorModal = () => setShowErrorModal(false);
   useEffect(() => {
     axios
       .get(
@@ -129,13 +128,7 @@ const ChallengeCreatePage: React.FC = () => {
   };
 
   const [showBackModal, setShowBackModal] = useState(false);
-  const closeBackModal = () => setShowBackModal(false);
-  const handleBackButtonClick = () => {
-    router.push("/challenge");
-  };
-
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const closeInfoModal = () => setShowInfoModal(false);
 
   return (
     <WithHeaderLayout>
@@ -231,18 +224,18 @@ const ChallengeCreatePage: React.FC = () => {
       {showBackModal && (
         <Modal
           open={showBackModal}
-          onClose={closeBackModal}
+          onClose={() => setShowBackModal(false)}
           title="챌린지 만들기를 그만두시겠어요?"
           content="저장되지 않아요."
           confirmButton="그만두기"
           closeButton="취소"
-          confirmEvent={handleBackButtonClick}
+          confirmEvent={() => router.push("/challenge")}
         />
       )}
       {showInfoModal && (
         <Modal
           open={showInfoModal}
-          onClose={closeInfoModal}
+          onClose={() => setShowInfoModal(false)}
           title="오늘 이후 날짜를 선택해 주세요"
           closeButton="확인"
         />
@@ -250,10 +243,10 @@ const ChallengeCreatePage: React.FC = () => {
       {showErrorModal && (
         <Modal
           open={showErrorModal}
-          onClose={closeErrorModal}
+          onClose={() => setShowErrorModal(false)}
           title="이미 진행중인 챌린지가 존재합니다!"
           confirmButton="확인"
-          confirmEvent={handleBackButtonClick}
+          confirmEvent={() => router.push("/challenge")}
         />
       )}
     </WithHeaderLayout>

@@ -22,12 +22,33 @@ const ChallengePage = () => {
         }
       )
       .then((res) => {
-        console.log("??", res.data);
+        if (res.data.totalCount >= 1)
+          getChallengeDetail(res.data.challengeInfos[0].id);
       })
       .catch((error) => {
         console.log("!", error);
       });
   }, []);
+
+  const getChallengeDetail = (challengeId: number) => {
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/challenge/${challengeId}?challengeId=${challengeId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log("??");
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log("!", error);
+      });
+  };
   return (
     <WithHeaderLayout>
       <div className="h-screen flex justify-center items-center bg-[#E6FFF6] m-3 rounded-xl">

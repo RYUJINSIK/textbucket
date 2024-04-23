@@ -90,7 +90,7 @@ const PilsaDetailPage = () => {
       {pilsaInfo && (
         <>
           <main
-            className="pt-6 flex flex-col gap-y-5 px-4 h-full"
+            className="pt-6 flex flex-col gap-y-5 px-4 h-full pb-28"
             style={{
               minHeight: "calc(100vh - 101px)",
             }}
@@ -205,7 +205,7 @@ const PilsaDetailPage = () => {
             </div>
           </main>
 
-          <footer className="bg-white border-t border-[EFEFEF] py-3 px-5 w-full flex items-start justify-between bottom-11 sticky left-0 z-10">
+          <footer className="bg-white border-t border-[EFEFEF] py-3 px-5 w-full flex items-start justify-between bottom-11 absolute left-0 z-10">
             {" "}
             {pilsaInfo.isPreviousPilsa && (
               <Link

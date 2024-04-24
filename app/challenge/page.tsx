@@ -80,12 +80,6 @@ const ChallengePage = () => {
             <p>data.startDate : {challenge.startDate}</p>
             <p>data.endDate : {challenge.endDate}</p>
             <p>data.description : {challenge.description}</p>
-
-            {Object.entries<ICategoryItem>(categoryList).map(
-              ([key, category]) => (
-                <p key={key}>data.categoryListDto : {category.categoryName}</p>
-              )
-            )}
             <p>data.achievementRate : {challenge.achievementRate}</p>
           </>
         )

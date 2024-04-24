@@ -63,9 +63,9 @@ const ChallengePage = () => {
       )
       .then((res) => {
         console.log("??");
-        console.log(res.data);
+        // console.log(res.data.categoryListDto.categories);
         setChallenge(res.data);
-        setCategoryList(res.data.categoryListDto);
+        setCategoryList(res.data.categoryListDto.categories);
       })
       .catch((error) => {
         console.log("!", error);
@@ -76,11 +76,21 @@ const ChallengePage = () => {
       {exist ? (
         challenge && (
           <>
-            <p>data.title : {challenge.title}</p>
-            <p>data.startDate : {challenge.startDate}</p>
-            <p>data.endDate : {challenge.endDate}</p>
-            <p>data.description : {challenge.description}</p>
-            <p>data.achievementRate : {challenge.achievementRate}</p>
+            <p>title : {challenge.title}</p>
+            <p>startDate : {challenge.startDate}</p>
+            <p>endDate : {challenge.endDate}</p>
+            <p>description : {challenge.description}</p>
+            <p>achievementRate : {challenge.achievementRate}</p>
+            <p>
+              category :
+              {categoryList &&
+                categoryList.map((cate) => (
+                  <>
+                    <span>{cate.categoryName}</span>
+                    <span className="last:hidden">∙</span>
+                  </>
+                ))}
+            </p>
           </>
         )
       ) : (

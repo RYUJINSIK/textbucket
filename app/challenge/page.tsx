@@ -88,24 +88,9 @@ const ChallengePage = () => {
       {exist ? (
         challenge && (
           <>
-            <p>title : {challenge.title}</p>
-            <p>startDate : {challenge.startDate}</p>
-            <p>endDate : {challenge.endDate}</p>
-            <p>description : {challenge.description}</p>
-            <p>achievementRate : {challenge.achievementRate}</p>
-            <p>
-              category :
-              {categoryList &&
-                categoryList.map((cate: any) => (
-                  <>
-                    <span>{cate.categoryName}</span>
-                    <span className="last:hidden">∙</span>
-                  </>
-                ))}
-            </p>
-            <div className="w-[360px] h-[900px] relative overflow-hidden bg-[#bfd8f2]">
-              <div className="flex items-center absolute left-4 top-[150px] gap-4 py-2">
-                <div className="flex items-center gap-1">
+            <div className="w-full h-[900px] overflow-hidden bg-[#bfd8f2]">
+              <div className="flex items-center mt-8">
+                <div className="flex items-center gap-1 pl-5">
                   <p className="text-xl font-bold text-black">
                     {challenge.title}
                   </p>
@@ -117,50 +102,48 @@ const ChallengePage = () => {
                   </div>
                 </div>
               </div>
+              <div className="flex flex-col items-center mt-2">
+                <div className="flex flex-col items-start w-[350px] left-4 gap-1 p-3 rounded-xl bg-[#e9fff7]/30">
+                  <div className="flex items-center gap-2">
+                    <p className="w-[50px] text-xs font-medium text-[#555]">
+                      기간
+                    </p>
+                    <p className="text-xs text-[#353535]">
+                      {challenge.startDate} ~ {challenge.endDate}
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <p className="w-[50px] text-xs font-medium text-[#555]">
+                      다짐
+                    </p>
+                    <p className="text-xs text-[#353535] whitespace-pre-wrap">
+                      {challenge.description}
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <p className="w-[50px] text-xs font-medium text-[#555]">
+                      카테고리
+                    </p>
+                    <div className="flex gap-0.5">
+                      {categoryList &&
+                        categoryList.map((cate: any) => (
+                          <>
+                            <p className="text-xs text-[#353535]">
+                              {cate.categoryName}
+                            </p>
 
-              <div className="flex flex-col items-start w-[328px] absolute left-4 top-[195px] gap-1 p-3 rounded-xl bg-[#e9fff7]/30">
-                <div className="flex items-center gap-2">
-                  <p className="w-[50px] text-xs font-medium text-[#555]">
-                    기간
-                  </p>
-                  <p className="text-xs text-[#353535]">
-                    {challenge.startDate} ~ {challenge.endDate}
-                  </p>
-                </div>
-                <div className="flex items-start gap-2">
-                  <p className="w-[50px] text-xs font-medium text-[#555]">
-                    다짐
-                  </p>
-                  <p className="text-xs text-[#353535]">
-                    {challenge.description}
-                  </p>
-                </div>
-                <div className="flex items-start gap-2">
-                  <p className="w-[50px] text-xs font-medium text-[#555]">
-                    카테고리
-                  </p>
-                  <div className="flex gap-0.5">
-                    {categoryList &&
-                      categoryList.map((cate: any) => (
-                        <>
-                          <p className="text-xs text-[#353535]">
-                            {cate.categoryName}
-                          </p>
-
-                          <p className="text-xs text-[#353535] last:hidden">
-                            ∙
-                          </p>
-                        </>
-                      ))}
+                            <p className="text-xs text-[#353535] last:hidden">
+                              ∙
+                            </p>
+                          </>
+                        ))}
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="absolute left-0 top-[295px] w-[360px] h-[493px] rounded-tl-3xl rounded-tr-3xl bg-white">
-                <div className="w-[328px] h-1 absolute left-[15px] top-[95px] bg-[#c4c4c4]" />
-                <div className="w-[94px] h-1 absolute left-[15px] top-[95px] bg-[#fd53a1]" />
-
-                <div className="flex flex-col gap-3 absolute left-4 top-6">
+              <div className="left-0 w-full h-full rounded-tl-3xl rounded-tr-3xl bg-white mt-5">
+                <div className="flex flex-col items-center pt-7">
                   <div className="flex justify-between items-center w-[328px] h-[37px] py-2">
                     <p className="text-base font-bold text-[#353535]">
                       챌린지 달성도
@@ -170,40 +153,6 @@ const ChallengePage = () => {
                     </p>
                   </div>
                   {/* stamp 컴포넌트 생성해서 단계 표시  */}
-                </div>
-
-                <div className="flex flex-col justify-start items-start w-[328px] absolute left-4 top-[146px] gap-2 px-4 py-5 rounded-xl bg-[#ffbddc]">
-                  <p className="text-[15px] font-bold text-[#353535]">
-                    1장 가장 인상깊은 구절
-                  </p>
-                  <p className="text-[15px] font-light text-[#353535]">
-                    Ich bitte die Kinder um Verzeihung, daß ich dieses Buch
-                    einem Erwachsenen widme.
-                  </p>
-                  <div className="flex justify-center items-center self-stretch relative py-1">
-                    <p className="text-xs font-medium text-[#777]">더보기</p>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={16}
-                      height={16}
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      className="w-4 h-4"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M5.64645 3.64645C5.84171 3.45118 6.15829 3.45118 6.35355 3.64645L10.3536 7.64645C10.5488 7.84171 10.5488 8.15829 10.3536 8.35355L6.35355 12.3536C6.15829 12.5488 5.84171 12.5488 5.64645 12.3536C5.45118 12.1583 5.45118 11.8417 5.64645 11.6464L9.29289 8L5.64645 4.35355C5.45118 4.15829 5.45118 3.84171 5.64645 3.64645Z"
-                        fill="#777777"
-                      />
-                    </svg>
-                  </div>
-                </div>
-
-                <div className="flex justify-center items-center w-[328px] absolute left-4 top-[719px] gap-1 px-6 py-4 rounded-xl bg-[#00c37d]">
-                  <p className="text-base font-bold text-white">
-                    오늘의 챌린지 실천하기
-                  </p>
                 </div>
               </div>
             </div>

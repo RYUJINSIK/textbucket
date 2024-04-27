@@ -3,6 +3,7 @@ import { useState, useEffect, ChangeEvent } from "react";
 import axios from "axios";
 import Link from "next/link";
 import WithHeaderLayout from "@/components/WithHeaderLayout";
+import { useRouter } from "next/navigation";
 
 export interface IChallengeItem {
   id: number;
@@ -18,6 +19,7 @@ interface ICategoryItem {
   description: string;
 }
 const ChallengePage = () => {
+  const router = useRouter();
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [status, setStatus] = useState(["ING"]);
@@ -124,17 +126,12 @@ const ChallengePage = () => {
                     <p className="w-[50px] text-xs font-medium text-[#555]">
                       카테고리
                     </p>
-                    <div className="flex gap-0.5">
+                    <div className="flex gap-0.5 text-xs text-[#353535]">
                       {categoryList &&
                         categoryList.map((cate: any) => (
                           <>
-                            <p className="text-xs text-[#353535]">
-                              {cate.categoryName}
-                            </p>
-
-                            <p className="text-xs text-[#353535] last:hidden">
-                              ∙
-                            </p>
+                            <p>{cate.categoryName}</p>
+                            <p className="last:hidden">∙</p>
                           </>
                         ))}
                     </div>
@@ -142,8 +139,8 @@ const ChallengePage = () => {
                 </div>
               </div>
 
-              <div className="left-0 w-full h-full rounded-tl-3xl rounded-tr-3xl bg-white mt-5">
-                <div className="flex flex-col items-center pt-7">
+              <div className="left-0 w-full h-full rounded-tl-3xl rounded-tr-3xl bg-white mt-5 p-4">
+                <div className="flex flex-col items-center pt-3">
                   <div className="flex justify-between items-center w-[328px] h-[37px] py-2">
                     <p className="text-base font-bold text-[#353535]">
                       챌린지 달성도
@@ -154,6 +151,15 @@ const ChallengePage = () => {
                   </div>
                   {/* stamp 컴포넌트 생성해서 단계 표시  */}
                 </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    router.push("/create");
+                  }}
+                  className={`mt-5 mb-5 py-4 flex w-full items-center justify-center rounded-lg text-white text-center bg-[#00C37D] text-base font-bold`}
+                >
+                  오늘의 챌린지 실천하기
+                </button>
               </div>
             </div>
           </>

@@ -154,7 +154,7 @@ const ChallengePage = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    router.push("/create");
+                    router.push(`/create?challengeId=${challenge.id}`);
                   }}
                   className={`mt-5 mb-5 py-4 flex w-full items-center justify-center rounded-lg text-white text-center bg-[#00C37D] text-base font-bold`}
                 >

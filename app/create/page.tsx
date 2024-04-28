@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import WithHeaderLayout from "@/components/WithHeaderLayout";
 import Image from "next/image";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import BottomSheet from "@/components/BottomSheet";
 import Modal from "@/components/Modal";
 
@@ -18,6 +18,9 @@ interface ICategoryItem {
 
 const CreatePage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const challengeId = searchParams.get("challengeId");
+  const typeCheck: Boolean = searchParams.has("challengeId");
   const [formData, setFormData] = useState({
     title: "",
     textContents: "",
@@ -51,6 +54,9 @@ const CreatePage = () => {
       .catch((error) => {
         console.log("!", error);
       });
+
+    console.log("challengeId ? : ", challengeId);
+    console.log("typeCheck ? : ", typeCheck);
   }, []);
 
   const handleCategoryClick = (category: number) => {
@@ -271,31 +277,33 @@ const CreatePage = () => {
               <p className="text-sm text-[#777] font-semibold">카테고리</p>
               <span className="text-xs text-[#777]">(최대3개)</span>
             </div>
-            <ul className="flex flex-wrap items-center justify-center gap-2.5 px-2">
-              {Object.entries<ICategoryItem>(categoryList).map(
-                ([key, category]) => (
-                  <li
-                    className={`px-3 py-1.5 border border-[#E3E3E3] rounded-[100px] cursor-pointer ${
-                      selectedCategories.includes(category?.categoryCd)
-                        ? "bg-[#00C37D]"
-                        : ""
-                    }`}
-                    key={key}
-                    onClick={() => handleCategoryClick(category.categoryCd)}
-                  >
-                    <span
-                      className={`text-sm text-[#999] ${
-                        selectedCategories.includes(category.categoryCd)
-                          ? "text-white font-semibold"
-                          : "font-light"
+            {!typeCheck && (
+              <ul className="flex flex-wrap items-center justify-center gap-2.5 px-2">
+                {Object.entries<ICategoryItem>(categoryList).map(
+                  ([key, category]) => (
+                    <li
+                      className={`px-3 py-1.5 border border-[#E3E3E3] rounded-[100px] cursor-pointer ${
+                        selectedCategories.includes(category?.categoryCd)
+                          ? "bg-[#00C37D]"
+                          : ""
                       }`}
+                      key={key}
+                      onClick={() => handleCategoryClick(category.categoryCd)}
                     >
-                      {category.categoryName}
-                    </span>
-                  </li>
-                )
-              )}
-            </ul>
+                      <span
+                        className={`text-sm text-[#999] ${
+                          selectedCategories.includes(category.categoryCd)
+                            ? "text-white font-semibold"
+                            : "font-light"
+                        }`}
+                      >
+                        {category.categoryName}
+                      </span>
+                    </li>
+                  )
+                )}
+              </ul>
+            )}
           </div>
           <button
             type="button"

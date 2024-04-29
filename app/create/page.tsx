@@ -19,8 +19,8 @@ interface ICategoryItem {
 const CreatePage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const challengeId = searchParams.get("challengeId");
-  const typeCheck: Boolean = searchParams.has("challengeId");
+  const challengeId: any = searchParams.get("challengeId");
+  const isChallenge = searchParams.has("challengeId");
   const [formData, setFormData] = useState({
     title: "",
     textContents: "",
@@ -56,7 +56,7 @@ const CreatePage = () => {
       });
 
     console.log("challengeId ? : ", challengeId);
-    console.log("typeCheck ? : ", typeCheck);
+    console.log("isChallenge ? : ", isChallenge);
   }, []);
 
   const handleCategoryClick = (category: number) => {
@@ -108,6 +108,10 @@ const CreatePage = () => {
   };
 
   const handleSubmit = async (imageUrl: string) => {
+    let postChallengeId = 0;
+    if (isChallenge) {
+      postChallengeId = parseInt(challengeId);
+    }
     const requestBody = {
       title: title,
       author: author,
@@ -118,6 +122,7 @@ const CreatePage = () => {
       backgroundColor: "",
       categoryCd: selectedCategories,
       images: [{ imageUrl: imageUrl, thumbnail: "Y", imageSeq: 0 }],
+      challengeId: postChallengeId,
     };
     try {
       const response = await axios.post(
@@ -272,12 +277,12 @@ const CreatePage = () => {
             />
           </div>
           <hr className="my-4 border-[#EFEFEF]" />
-          <div className="flex flex-col items-center justify-center gap-y-3">
-            <div className="flex items-center gap-x-0.5">
-              <p className="text-sm text-[#777] font-semibold">카테고리</p>
-              <span className="text-xs text-[#777]">(최대3개)</span>
-            </div>
-            {!typeCheck && (
+          {isChallenge === false && (
+            <div className="flex flex-col items-center justify-center gap-y-3">
+              <div className="flex items-center gap-x-0.5">
+                <p className="text-sm text-[#777] font-semibold">카테고리</p>
+                <span className="text-xs text-[#777]">(최대3개)</span>
+              </div>
               <ul className="flex flex-wrap items-center justify-center gap-2.5 px-2">
                 {Object.entries<ICategoryItem>(categoryList).map(
                   ([key, category]) => (
@@ -303,8 +308,8 @@ const CreatePage = () => {
                   )
                 )}
               </ul>
-            )}
-          </div>
+            </div>
+          )}
           <button
             type="button"
             className="mt-10 mb-4 w-full py-4 rounded-lg text-white text-center bg-[#00C37D] text-sm font-bold"

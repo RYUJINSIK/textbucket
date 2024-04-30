@@ -38,7 +38,8 @@ const CreatePage = () => {
   const [showWarningModal, setShowWarningModal] = useState(false);
   const [imageNumber, setImageNumber] = useState(0);
   const [categoryList, setCategoryList] = useState<any>([]);
-
+  const [postChallengeId, setPostChallengeId] = useState(0);
+  const [pageTitle, setPageTitle] = useState("필사하기");
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/pilsa/category`, {
@@ -55,8 +56,10 @@ const CreatePage = () => {
         console.log("!", error);
       });
 
-    console.log("challengeId ? : ", challengeId);
-    console.log("isChallenge ? : ", isChallenge);
+    if (isChallenge) {
+      setPostChallengeId(parseInt(challengeId));
+      setPageTitle("챌린지 필사하기");
+    }
   }, []);
 
   const handleCategoryClick = (category: number) => {
@@ -108,10 +111,6 @@ const CreatePage = () => {
   };
 
   const handleSubmit = async (imageUrl: string) => {
-    let postChallengeId = 0;
-    if (isChallenge) {
-      postChallengeId = parseInt(challengeId);
-    }
     const requestBody = {
       title: title,
       author: author,
@@ -159,7 +158,8 @@ const CreatePage = () => {
     <>
       <WithHeaderLayout>
         <form action="" className="mt-4 px-4">
-          <div className="relative rounded-xl py-5 px-3 bg-[#F8F8F8]">
+          <span className="text-xl font-semibold pb-5">{pageTitle}</span>
+          <div className="relative rounded-xl mt-3 py-5 px-3 bg-[#F8F8F8]">
             <input
               type="text"
               className="text-xl bg-transparent border-none ring-0 focus:ring-0 focus:outline-none placeholder-[#999]"

@@ -119,7 +119,7 @@ const ChallengePage = () => {
                       다짐
                     </p>
                     <p className="text-xs text-[#353535] whitespace-pre-wrap">
-                      {challenge.description}
+                      {challenge.description.substring(0, 20) + " ... "}
                     </p>
                   </div>
                   <div className="flex items-start gap-2">

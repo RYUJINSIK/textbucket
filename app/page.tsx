@@ -2,6 +2,7 @@
 
 import PilsaCard, { IPilsaCardItem } from "@/components/PilsaCard";
 import WithHeaderLayout from "@/components/WithHeaderLayout";
+import BottomNav from "@/components/BottomNav";
 import { useAuth } from "@/shared/contexts/AuthContext";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -55,26 +56,29 @@ export default function Home() {
   return (
     mounted && (
       <WithHeaderLayout>
-        <div className="flex flex-col gap-y-8 mt-5 pb-5 px-4">
-          <section className="flex flex-col gap-y-4">
-            <h3 className="text-lg font-bold">오늘의 글감</h3>
-            {todayList && todayList.pilsaLists.length !== 0 && (
-              <PilsaCard pilsaInfo={todayList.pilsaLists[0]} />
-            )}
-          </section>
-          <section className="flex flex-col gap-y-4">
-            <h3 className="text-lg font-bold">추천 글감</h3>
-            {recommenList &&
-              recommenList.pilsaLists.length !== 0 &&
-              recommenList.pilsaLists.map((pilsaInfo: IPilsaCardItem) => (
-                <PilsaCard
-                  pilsaInfo={pilsaInfo}
-                  key={pilsaInfo.pilsaId}
-                  hasDetail={false}
-                />
-              ))}
-          </section>
-        </div>
+        <>
+          <div className="flex flex-col gap-y-8 mt-5 pb-15 px-4">
+            <section className="flex flex-col gap-y-4">
+              <h3 className="text-lg font-bold">오늘의 글감</h3>
+              {todayList && todayList.pilsaLists.length !== 0 && (
+                <PilsaCard pilsaInfo={todayList.pilsaLists[0]} />
+              )}
+            </section>
+            <section className="flex flex-col gap-y-4">
+              <h3 className="text-lg font-bold">추천 글감</h3>
+              {recommenList &&
+                recommenList.pilsaLists.length !== 0 &&
+                recommenList.pilsaLists.map((pilsaInfo: IPilsaCardItem) => (
+                  <PilsaCard
+                    pilsaInfo={pilsaInfo}
+                    key={pilsaInfo.pilsaId}
+                    hasDetail={false}
+                  />
+                ))}
+            </section>
+          </div>
+          <BottomNav />
+        </>
       </WithHeaderLayout>
     )
   );

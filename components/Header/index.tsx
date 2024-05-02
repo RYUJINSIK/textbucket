@@ -7,7 +7,11 @@ import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import Modal from "@/components/Modal";
 
-const Header = () => {
+type HeaderProps = {
+  iconType: string;
+};
+
+const Header = ({ iconType }: HeaderProps) => {
   const { isSigned, profile } = useAuth();
   const pathName = usePathname();
   const router = useRouter();
@@ -26,6 +30,24 @@ const Header = () => {
     return void router.push("/login");
   }, [router]);
 
+  const handleIconClick = (type: string) => {
+    switch (type) {
+      case "setting":
+        router.push("/");
+        break;
+      case "archive":
+        break;
+      case "write":
+        break;
+      case "archive":
+        break;
+      case "my":
+        break;
+      default:
+        break;
+    }
+  };
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -37,7 +59,6 @@ const Header = () => {
     mounted && (
       <header className="w-full flex items-center justify-center sticky top-0 bg-white h-14 border-b border-[#efefef] z-50">
         <div className="w-full flex justify-between items-center px-4">
-          {/* <Link href={"/"}> */}
           <div className="cursor-pointer" onClick={logoClick}>
             <Image
               src="/images/logo.png"
@@ -46,46 +67,22 @@ const Header = () => {
               height={28}
             />
           </div>
-          {/* </Link> */}
-          {isSigned ? (
+          {iconType !== "" ? (
             <div className="flex items-center gap-x-3">
-              {!isCreatePage && (
-                <Link
-                  href={"/create"}
-                  className="py-2 px-4 rounded-lg bg-[#00C37D] text-white text-sm font-semibold"
-                >
-                  필사하기
-                </Link>
-              )}
               <div
-                className="w-8 h-8 bg-gray-500 overflow-hidden rounded-full cursor-pointer"
-                onClick={goToMyPage}
+                className="cursor-pointer"
+                onClick={() => handleIconClick(iconType)}
               >
-                {profile && profile?.imageUrl && (
-                  <img
-                    src={profile?.imageUrl}
-                    alt="profile"
-                    width={32}
-                    height={32}
-                  />
-                )}
+                <img
+                  src={`/icons/${iconType}.png`}
+                  alt="profile"
+                  width={25}
+                  height={25}
+                />
               </div>
             </div>
           ) : (
-            <div className="flex items-center gap-x-2">
-              <div
-                onClick={goToLoginPage}
-                className="py-2 px-4 rounded-lg bg-[#00C37D] text-white text-sm font-semibold cursor-pointer"
-              >
-                필사하기
-              </div>
-              <div
-                onClick={goToLoginPage}
-                className="py-2 px-4 rounded-lg border border-[#00C37D] text-[#00C37D] text-sm font-semibold cursor-pointer"
-              >
-                로그인
-              </div>
-            </div>
+            <></>
           )}
         </div>
         {confirmModal && (

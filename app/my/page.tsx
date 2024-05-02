@@ -1,5 +1,6 @@
 "use client";
 
+import Header from "@/components/Header";
 import PilsaCard from "@/components/PilsaCard";
 import WithHeaderLayout from "@/components/WithHeaderLayout";
 import { useAuth } from "@/shared/contexts/AuthContext";
@@ -84,6 +85,7 @@ const MyPage = () => {
   return (
     mounted && (
       <WithHeaderLayout>
+        <Header iconType="setting" />
         <main className="mt-4 px-4 flex flex-col gap-y-8">
           <section className="p-4 flex flex-col gap-y-3 items-center justify-center border rounded-xl border-[#EFEFEF]">
             <div className="w-16 h-16 rounded-full overflow-hidden">

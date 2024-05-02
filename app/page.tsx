@@ -1,5 +1,6 @@
 "use client";
 
+import Header from "@/components/Header";
 import PilsaCard, { IPilsaCardItem } from "@/components/PilsaCard";
 import WithHeaderLayout from "@/components/WithHeaderLayout";
 import BottomNav from "@/components/BottomNav";
@@ -57,6 +58,7 @@ export default function Home() {
     mounted && (
       <WithHeaderLayout>
         <>
+          <Header iconType="" />
           <div className="flex flex-col gap-y-8 mt-5 pb-15 px-4">
             <section className="flex flex-col gap-y-4">
               <h3 className="text-lg font-bold">오늘의 글감</h3>
@@ -77,7 +79,6 @@ export default function Home() {
                 ))}
             </section>
           </div>
-          <BottomNav />
         </>
       </WithHeaderLayout>
     )

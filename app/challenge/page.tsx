@@ -1,7 +1,9 @@
 "use client";
+
 import { useState, useEffect, ChangeEvent } from "react";
 import axios from "axios";
 import Link from "next/link";
+import Header from "@/components/Header";
 import WithHeaderLayout from "@/components/WithHeaderLayout";
 import { useRouter } from "next/navigation";
 
@@ -87,6 +89,7 @@ const ChallengePage = () => {
   }
   return (
     <WithHeaderLayout>
+      <Header iconType="archive" />
       {exist ? (
         challenge && (
           <>

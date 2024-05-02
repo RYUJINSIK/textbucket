@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/shared/contexts/AuthContext";
 
 const BottomNav = () => {
   const router = useRouter();
   const { isSigned, profile } = useAuth();
+  const pathName = usePathname();
   const [active, setActive] = useState({
     home: false,
     challenge: false,
@@ -14,6 +15,15 @@ const BottomNav = () => {
     archive: false,
     my: false,
   });
+
+  useEffect(() => {
+    if (pathName.includes("challenge"))
+      setActive({ ...active, challenge: true });
+    if (pathName.includes("create")) setActive({ ...active, write: true });
+    if (pathName.includes("my")) setActive({ ...active, archive: true });
+
+    // if (pathName.includes("")) setActive({ ...active, home: true });
+  }, []);
   const homeSrc = active.home
     ? "/icons/home_active.png"
     : "/icons/home_inactive.png";

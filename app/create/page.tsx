@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import WithHeaderLayout from "@/components/WithHeaderLayout";
+import Header from "@/components/Header";
 import Image from "next/image";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -157,6 +158,7 @@ const CreatePage = () => {
   return (
     <>
       <WithHeaderLayout>
+        <Header iconType="" />
         <form action="" className="mt-4 px-4">
           <span className="text-xl font-semibold pb-5">{pageTitle}</span>
           <div className="relative rounded-xl mt-3 py-5 px-3 bg-[#F8F8F8]">

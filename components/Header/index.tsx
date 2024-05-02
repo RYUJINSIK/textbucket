@@ -33,7 +33,7 @@ const Header = ({ iconType }: HeaderProps) => {
   const handleIconClick = (type: string) => {
     switch (type) {
       case "setting":
-        router.push("/");
+        router.push("/my/setting");
         break;
       case "archive":
         break;

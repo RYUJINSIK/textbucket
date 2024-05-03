@@ -44,6 +44,7 @@ const GetProfile = () => {
         "refreshTokenExpirationTime",
         refreshTokenExpirationTime
       );
+      document.cookie = `refresh-token=${refreshToken}`;
       getProfile();
     } else {
       router.push("/404");

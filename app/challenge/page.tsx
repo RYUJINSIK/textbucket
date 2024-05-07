@@ -88,6 +88,15 @@ const ChallengePage = () => {
     setMounted(true);
   }, []);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   function dateDifference(date1: any, date2: any) {
     const startDate = new Date(date1);
     const endDate = new Date(date2);
@@ -159,7 +168,10 @@ const ChallengePage = () => {
                   </div>
                 </div>
                 <div className="flex flex-col items-center mt-2">
-                  <div className="flex flex-col items-start w-[350px] left-4 gap-1 p-3 rounded-xl bg-[#e9fff7]/30">
+                  <div
+                    className="flex flex-col items-start w-[350px] left-4 gap-1 p-3 rounded-xl bg-[#e9fff7]/30 cursor-pointer"
+                    onClick={openModal}
+                  >
                     <div className="flex items-center gap-2">
                       <p className="w-[50px] text-xs font-medium text-[#555]">
                         기간
@@ -238,6 +250,84 @@ const ChallengePage = () => {
               </div>
             </div>
           </div>
+        )}
+
+        {isModalOpen && (
+          <>
+            <div
+              className="fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-[60]"
+              onClick={closeModal}
+            />
+            <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 bg-white z-[70] w-full max-w-[390px] rounded-t-xl">
+              <div className="left-0 w-full h-full rounded-tl-3xl rounded-tr-3xl bg-white mt-3 p-4">
+                <div className="flex flex-col items-center font-bold">
+                  내 챌린지 디테일
+                </div>
+
+                <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 gap-6">
+                  <div className="flex flex-col justify-center items-start flex-grow-0 flex-shrink-0 w-[328px] relative gap-1">
+                    <p className="self-stretch flex-grow-0 flex-shrink-0 w-[328px] text-[13px] font-medium text-left text-[#afafaf]">
+                      챌린지명
+                    </p>
+                    <p className="self-stretch flex-grow-0 flex-shrink-0 w-[328px] text-[13px] text-left text-[#353535]">
+                      {challenge?.title}
+                    </p>
+                  </div>
+                  <div className="flex flex-col justify-center items-start flex-grow-0 flex-shrink-0 w-[328px] relative gap-1">
+                    <p className="self-stretch flex-grow-0 flex-shrink-0 w-[328px] text-[13px] font-medium text-left text-[#afafaf]">
+                      기간
+                    </p>
+                    <div className="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-1">
+                      <p className="flex-grow-0 flex-shrink-0 text-[13px] text-left text-[#353535]">
+                        {dateDifference(
+                          challenge?.startDate,
+                          challenge?.endDate
+                        )}
+                        일간
+                      </p>
+                      <p className="flex-grow-0 flex-shrink-0 text-[13px] text-left text-[#afafaf]">
+                        |
+                      </p>
+                      <p className="flex-grow-0 flex-shrink-0 text-[13px] text-left text-[#353535]">
+                        {challenge?.startDate} ~ {challenge?.endDate}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-col justify-center items-start flex-grow-0 flex-shrink-0 w-[328px] relative gap-1">
+                    <p className="self-stretch flex-grow-0 flex-shrink-0 w-[328px] text-[13px] font-medium text-left text-[#afafaf]">
+                      다짐
+                    </p>
+                    <p className="self-stretch flex-grow-0 flex-shrink-0 w-[328px] text-[13px] text-left text-[#353535]">
+                      {challenge?.description}
+                    </p>
+                  </div>
+                  <div className="flex flex-col justify-center items-start flex-grow-0 flex-shrink-0 w-[328px] relative gap-1">
+                    <p className="self-stretch flex-grow-0 flex-shrink-0 w-[328px] text-[13px] font-medium text-left text-[#afafaf]">
+                      카테고리
+                    </p>
+                    <div className="flex justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-0.5">
+                      <p className="flex-grow-0 flex-shrink-0 text-[13px] text-left text-[#353535]">
+                        {categoryList &&
+                          categoryList.map((cate: any) => (
+                            <>
+                              <p>{cate.categoryName}</p>
+                              <p className="last:hidden">∙</p>
+                            </>
+                          ))}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className={`mt-5 mb-5 py-4 flex w-full items-center justify-center rounded-lg text-center bg-[#e3e3e3] text-base font-bold`}
+                >
+                  닫기
+                </button>
+              </div>
+            </div>
+          </>
         )}
       </WithHeaderLayout>
     )

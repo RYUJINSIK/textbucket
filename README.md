@@ -2,9 +2,7 @@
 ![1](https://github.com/Potenday-PILSA/pilsa-fe/assets/64420030/de7d0fce-b8f9-4e48-abc3-cae5ed98d33e)
 
 ## 프로젝트 기본정보
-- `1차 프로젝트 기간` : 2024 / 01 / 26 ~ 2024 / 02 / 04
-- `2차 프로젝트 기간` : 2024 / 02 / 06 ~ ing
-- `배포링크` : [textbucket](https://textbucket.vercel.app/)
+- `프로젝트 기간` : 2024 / 01 / 26 ~ 2024 / 02 / 06
 
 ## 프로젝트 소개
 ![2](https://github.com/Potenday-PILSA/pilsa-fe/assets/64420030/32478dc8-066c-4337-9fe6-fd04ccd8ffdd)
@@ -25,7 +23,4 @@
 
 #### `Communication`
 <img src="https://img.shields.io/badge/slack-4A154B?style=flat-square&logo=slack&logoColor=white"> <img src="https://img.shields.io/badge/notion-000000?style=flat-square&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/discord-5865F2?style=flat-square&logo=discord&logoColor=white"> <img src="https://img.shields.io/badge/figma-F24E1E?style=flat-square&logo=figma&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=flat-square&logo=github&logoColor=white"> 
-
-## 개발 예정사항
-![9](https://github.com/Potenday-PILSA/pilsa-fe/assets/64420030/cb440883-9706-43db-a0aa-0087b4136e30)
 
